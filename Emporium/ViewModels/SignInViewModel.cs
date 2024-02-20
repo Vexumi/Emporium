@@ -1,7 +1,10 @@
 ﻿using Emporium.Infrastructure;
+using Emporium.Services;
+using Emporium.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -15,6 +18,8 @@ namespace Emporium.ViewModels
     {
         public ICommand SignInButtonCommand { get; set; }
 
+        private readonly SignInService _signInService;
+        private readonly Window _view;
         private string _email;
         private string _password;
 
@@ -38,14 +43,30 @@ namespace Emporium.ViewModels
             }
         }
 
-        public SignInViewModel()
+        public SignInViewModel(Window view)
         {
             SignInButtonCommand = new RelayCommand(o => SignIn());
+            _signInService = new SignInService();
+            _view = view;
         }
 
-        public void SignIn()
+        public async Task SignIn()
         {
-            throw new DivideByZeroException("SignInMethod");
+            var user = await _signInService.SignIn(Email, Password);
+            if (user == null) {
+                MessageBoxExtensions.IncorrectPassword();
+                return;
+            }
+
+            OpenMainWindow();
+        }
+
+        private void OpenMainWindow()
+        {
+            var mainWindow = new MainWindow();
+            _view.Owner = mainWindow;
+            _view.Hide();
+            mainWindow.Show();
         }
     }
 }

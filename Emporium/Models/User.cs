@@ -15,7 +15,7 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
-    public AccountTypeEnum AccountType { get; set; }
+    public byte AccountType { get; set; }
 
     public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
 
