@@ -1,4 +1,5 @@
 ﻿using Emporium.Infrastructure;
+using Emporium.Models;
 using Emporium.Services;
 using Emporium.Views;
 using System;
@@ -52,19 +53,29 @@ namespace Emporium.ViewModels
 
         public async Task SignIn()
         {
-            var user = await _signInService.SignIn(Email, Password);
+            /*var user = await _signInService.SignIn(Email, Password);
             if (user == null)
             {
                 MessageBoxExtensions.IncorrectPassword();
                 return;
-            }
+            }*/
 
-            OpenMainWindow();
+            var user = new User()
+            {
+                UserId = 0,
+                FullName = "Gaag Gleb Alexandrovich",
+                Phone = "88005553535",
+                Email = "admin",
+                Password = "admin",
+                AccountType = 0
+            };
+
+            OpenMainWindow(user);
         }
 
-        private void OpenMainWindow()
+        private void OpenMainWindow(User user)
         {
-            MainWindow mainWindow = new MainWindow();
+            MainWindow mainWindow = new MainWindow(user);
             mainWindow.Show();
 
             CloseLoginWindow();
