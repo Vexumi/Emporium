@@ -53,7 +53,8 @@ namespace Emporium.ViewModels
         public async Task SignIn()
         {
             var user = await _signInService.SignIn(Email, Password);
-            if (user == null) {
+            if (user == null)
+            {
                 MessageBoxExtensions.IncorrectPassword();
                 return;
             }
@@ -63,10 +64,22 @@ namespace Emporium.ViewModels
 
         private void OpenMainWindow()
         {
-            var mainWindow = new MainWindow();
-            _view.Owner = mainWindow;
-            _view.Hide();
+            MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
+
+            CloseLoginWindow();
+        }
+
+        private void CloseLoginWindow()
+        {
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window is SignInWindow)
+                {
+                    window.Close();
+                    break;
+                }
+            }
         }
     }
 }
