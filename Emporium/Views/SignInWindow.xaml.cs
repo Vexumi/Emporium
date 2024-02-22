@@ -1,6 +1,7 @@
 ﻿using Emporium.ViewModels;
 
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Emporium.Views
 {
@@ -14,6 +15,11 @@ namespace Emporium.Views
             InitializeComponent();
 
             DataContext = new SignInViewModel(this);
+        }
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext != null)
+            { ((SignInViewModel)this.DataContext).Password = ((PasswordBox)sender).Password; }
         }
     }
 }

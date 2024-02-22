@@ -5,12 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Emporium.Views"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="450" Width="800">
+        Title="LoginWindow" Height="450" Width="800" ResizeMode="NoResize">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Margin="315,146,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="199" Height="26" FontSize="16" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" />
-        <TextBox HorizontalAlignment="Left" Margin="315,177,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="199" Height="26" FontSize="16" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" />
-        <Button Content="Sign in" HorizontalAlignment="Left" Margin="344,218,0,0" VerticalAlignment="Top" Height="31" Width="140" Command="{Binding SignInButtonCommand}" />
-        <Label Content="Email:" HorizontalAlignment="Left" Margin="269,146,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.318,0.136" />
-        <Label Content="Password:" HorizontalAlignment="Left" Margin="248,177,0,0" VerticalAlignment="Top" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="117*"/>
+            <ColumnDefinition Width="138*"/>
+            <ColumnDefinition Width="510*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox HorizontalAlignment="Left" Margin="25,146,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="199" Height="26" FontSize="16" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" />
+        <PasswordBox HorizontalAlignment="Left" Margin="25,177,0,0" VerticalAlignment="Top" Width="199" Height="26" FontSize="16" PasswordChanged="PasswordBox_PasswordChanged" Grid.Column="4" />
+        <Button Content="Sign in" HorizontalAlignment="Left" Margin="54,218,0,0" VerticalAlignment="Top" Height="31" Width="140" Command="{Binding SignInButtonCommand}" Grid.Column="4" />
+        <Label Content="Email:" HorizontalAlignment="Left" Margin="117,146,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.318,0.136" Grid.Column="3" Grid.ColumnSpan="2" />
+        <Label Content="Password:" HorizontalAlignment="Left" Margin="96,177,0,0" VerticalAlignment="Top" Grid.Column="3" Grid.ColumnSpan="2" />
     </Grid>
 </Window>
