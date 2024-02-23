@@ -1,10 +1,17 @@
-﻿using Emporium.Infrastructure.Based;
+﻿using Emporium.Infrastructure;
+using Emporium.Infrastructure.Based;
 using Emporium.Models;
+using Emporium.Services;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Emporium.ViewModels.DialogWindows
 {
     public class ProductDetailsViewModel : BaseViewModel
     {
+        private readonly Window _view;
+        private ProductsService _productsService;
         private Product _product;
         public Product CurrentProduct
         {
@@ -15,9 +22,30 @@ namespace Emporium.ViewModels.DialogWindows
                 OnPropertyChanged("CurrentProduct");
             }
         }
-        public ProductDetailsViewModel(Product product)
+
+        public ICommand SaveCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
+
+        public ProductDetailsViewModel(Window view, Product product)
         {
+            _view = view;
             CurrentProduct = product;
+
+            this._productsService = new ProductsService();
+            this.SaveCommand = new RelayCommand(async o => Save());
+            this.DeleteCommand = new RelayCommand(o => Delete());
+        }
+
+        public async Task Save()
+        {
+            await this._productsService.Save(CurrentProduct);
+            this._view.DialogResult = true;
+        }
+
+        public async Task Delete()
+        {
+            await this._productsService.Delete(CurrentProduct);
+            this._view.DialogResult = true;
         }
     }
 }

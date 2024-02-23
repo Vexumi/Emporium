@@ -9,11 +9,7 @@ using System.Threading.Tasks;
 
 namespace Emporium.Services
 {
-    public class ProductsService: BaseService
+    public class ProductsService: CRUDService<Product>
     {
-        public async Task<List<Product>> GetAllProducts(int takeCount = 20, int offset = 0)
-        {
-            return await this.dbContext.Products.Skip(offset).Take(takeCount).ToListAsync();
-        }
     }
 }

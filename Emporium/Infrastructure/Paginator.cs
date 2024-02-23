@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Emporium.Infrastructure
+{
+    public class Paginator
+    {
+        protected int _totalElements;
+        public int Offset { get; protected set; } = 0;
+        public int TakeCount { get; protected set; }
+
+        public Paginator(int TotalElements, int TakeCount = 20)
+        {
+            _totalElements = TotalElements;
+            this.TakeCount = TakeCount;
+        }
+
+        public void NextPage()
+        {
+            if (Offset + TakeCount < _totalElements)
+            {
+                Offset += TakeCount;
+            }
+        }
+
+        public void PrevPage()
+        {
+            if (Offset - TakeCount > 0)
+            {
+                Offset -= TakeCount;
+            }
+            else
+            {
+                Offset = 0;
+            }
+        }
+    }
+}

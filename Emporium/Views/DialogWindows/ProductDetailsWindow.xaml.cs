@@ -12,7 +12,7 @@ namespace Emporium.Views.DialogWindows
         public ProductDetailsWindow(Product product)
         {
             InitializeComponent();
-            DataContext = new ProductDetailsViewModel(product);
+            DataContext = new ProductDetailsViewModel(this, product);
         }
     }
 }

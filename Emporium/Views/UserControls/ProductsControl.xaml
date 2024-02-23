@@ -7,7 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <DataGrid ItemsSource="{Binding Products}" AutoGenerateColumns="False" IsReadOnly="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0" ItemsSource="{Binding Products}" AutoGenerateColumns="False" IsReadOnly="True" Background="White">
             <DataGrid.ItemContainerStyle>
                 <Style TargetType="DataGridRow">
                     <EventSetter Event="MouseDoubleClick" Handler="OnRowDoubleClick"/>
@@ -19,8 +23,11 @@
                 <DataGridTextColumn Header="Цена" Binding="{Binding Price}"/>
                 <DataGridTextColumn Header="Категория" Binding="{Binding Category}"/>
                 <DataGridTextColumn Header="Рейтинг" Binding="{Binding Rating}"/>
-                <DataGridTextColumn Header="Описание" Binding="{Binding Description}" MaxWidth="200"/>
             </DataGrid.Columns>
         </DataGrid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" FlowDirection="RightToLeft" Height="30" Background="White">
+            <Button Content="Следующая страница" Margin="10,0,0,0" Width="150" Command="{Binding ChangePageCommand}" CommandParameter="Next"/>
+            <Button Content="Предыдущая страница" Margin="10,0,0,0" Width="150" Command="{Binding ChangePageCommand}" CommandParameter="Prev"/>
+        </StackPanel>
     </Grid>
 </UserControl>

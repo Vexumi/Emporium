@@ -45,8 +45,8 @@
             </DockPanel>
         </StackPanel>
         <StackPanel Grid.Column="1">
-            <Button Content="Сохранить" Height="40" Margin="10,5,10,5"/>
-            <Button Content="Удалить" Height="40" Margin="10,5,10,5"/>
+            <Button Content="Сохранить" Height="40" Margin="10,5,10,5" Command="{Binding SaveCommand}"/>
+            <Button Content="Удалить" Height="40" Margin="10,5,10,5" Command="{Binding DeleteCommand}"/>
         </StackPanel>
     </Grid>
 </Window>
