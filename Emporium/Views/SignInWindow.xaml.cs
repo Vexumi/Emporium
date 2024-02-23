@@ -14,7 +14,7 @@ namespace Emporium.Views
         {
             InitializeComponent();
 
-            DataContext = new SignInViewModel(this);
+            DataContext = new SignInViewModel();
         }
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
