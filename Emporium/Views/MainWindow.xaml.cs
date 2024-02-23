@@ -13,7 +13,7 @@ namespace Emporium.Views
         {
             InitializeComponent();
 
-            DataContext = new MainViewModel(user);
+            DataContext = new MainViewModel(this, user);
         }
     }
 }

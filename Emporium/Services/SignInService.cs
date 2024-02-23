@@ -6,14 +6,8 @@ using System.Threading.Tasks;
 
 namespace Emporium.Services
 {
-    public class SignInService
+    public class SignInService: BaseService
     {
-        private readonly ApplicationContext dbContext;
-        public SignInService()
-        {
-            dbContext = new ApplicationContext();
-        }
-
         public async Task<User> SignIn(string email, string password)
         {
             var user = await dbContext.Users
