@@ -6,7 +6,14 @@
         xmlns:local="clr-namespace:Emporium.Views"
         xmlns:controls="clr-namespace:Emporium.Views.UserControls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="516" Width="916" ResizeMode="NoResize">
     <Grid>
+        <StackPanel x:Name="StackPanelMenuButtons" HorizontalAlignment="Left" Width="188" Background="#FF828282">
+            <Button x:Name="ButtonProducts" Content="Товары" Height="45" Margin="0,0,0,10" Command="{Binding OpenWindowCommand}" CommandParameter="Products"/>
+            <Button x:Name="ButtonOrders" Content="Заказы" Height="45" Margin="0,0,0,10" Command="{Binding OpenWindowCommand}" CommandParameter="Orders"/>
+            <Button x:Name="ButtonPickPoints" Content="ПВЗ" Height="45" Margin="0,0,0,10" Command="{Binding OpenWindowCommand}" CommandParameter="PickPoints"/>
+            <Button x:Name="ButtonEmployees" Content="Сотрудники" Height="45" Margin="0,0,0,10" Command="{Binding OpenWindowCommand}" CommandParameter="Employees"/>
+        </StackPanel>
+        <DockPanel x:Name="DockPanel" Margin="188,0,0,0"/>
     </Grid>
 </Window>
