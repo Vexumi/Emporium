@@ -10,9 +10,9 @@ namespace Emporium.Services
 {
     public class ProductsService: BaseService
     {
-        public async Task<Product[]> GetAllProducts()
+        public async Task<List<Product>> GetAllProducts(int takeCount = 20, int offset = 0)
         {
-            return await this.dbContext.Products.ToArrayAsync();
+            return await this.dbContext.Products.Skip(offset).Take(takeCount).ToListAsync();
         }
     }
 }

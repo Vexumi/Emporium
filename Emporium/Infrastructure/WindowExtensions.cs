@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Emporium.Infrastructure
@@ -23,6 +24,29 @@ namespace Emporium.Infrastructure
                         yield return childOfChild;
                     }
                 }
+            }
+        }
+        public static void AddControlToView(UserControl uc, Window view)
+        {
+            foreach (DockPanel tb in FindVisualChildren<DockPanel>(view))
+            {
+                ClearPanel(tb);
+                tb.Children.Add(uc);
+                return;
+            }
+        }
+
+        public static void ClearPanel(Panel panel)
+        {
+            List<UIElement> elementsToRemove = new();
+            foreach (UIElement el in panel.Children)
+            {
+                elementsToRemove.Add(el);
+            }
+
+            foreach (var item in elementsToRemove)
+            {
+                panel.Children.Remove(item);
             }
         }
     }

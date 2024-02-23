@@ -1,19 +1,18 @@
 ﻿using Emporium.Models;
 using Emporium.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Emporium.ViewModels.UserControls
 {
-    public class ProductsControlViewModel: BaseViewModel
+    public class ProductsControlViewModel : BaseViewModel
     {
         private readonly ProductsService _productsService;
-        private Product[] _products;
+        private ObservableCollection<Product> _products = new();
 
-        public Product[] Products { 
+        public ObservableCollection<Product> Products
+        {
             get { return _products; }
             set
             {
@@ -34,9 +33,12 @@ namespace Emporium.ViewModels.UserControls
             return entity;
         }
 
-        private async Task LoadProducts()
+        public async Task LoadProducts()
         {
-            this.Products = await this._productsService.GetAllProducts();
+            var products = await _productsService.GetAllProducts();
+            this._products.Clear();
+            products.ForEach(el => this._products.Add(el));
+
         }
     }
 }

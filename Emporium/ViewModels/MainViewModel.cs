@@ -1,9 +1,11 @@
 ﻿using Emporium.Infrastructure;
 using Emporium.Infrastructure.Enums;
+using Emporium.Interfaces;
 using Emporium.Models;
 using Emporium.Views.UserControls;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,7 +16,6 @@ namespace Emporium.ViewModels
     {
         private User _user;
         private Window _view;
-
         public ICommand OpenWindowCommand { get; set; }
 
         public User CurrentUser
@@ -32,39 +33,21 @@ namespace Emporium.ViewModels
             this._view = view;
             this.CurrentUser = user;
 
-            this.OpenWindowCommand = new RelayCommand(o => OpenWindow(Enum.Parse<WindowType>(o.ToString())));
+            this.OpenWindowCommand = new RelayCommand(async o => await OpenWindow(Enum.Parse<WindowType>(o.ToString())));
         }
 
-        private void OpenWindow(WindowType windowType)
+        private async Task OpenWindow(WindowType windowType)
         {
             switch (windowType)
             {
                 case WindowType.Products:
                     {
-                        foreach (DockPanel tb in FindVisualChildren<DockPanel>(this._view))
-                        {
-                            ClearPanel(tb);
-                            var uc = new ProductsControl();
-                            tb.Children.Add(uc);
-                            return;
-                        }
+                        var uc = new ProductsControl();
+                        AddControlToView(uc, this._view);
+                        await uc.LoadData();
                         break;
                     }
                 default: break;
-            }
-        }
-
-        private void ClearPanel(Panel panel)
-        {
-            List<UIElement> elementsToRemove = new();
-            foreach (UIElement el in panel.Children)
-            {
-                elementsToRemove.Add(el);
-            }
-
-            foreach (var item in elementsToRemove)
-            {
-                panel.Children.Remove(item);
             }
         }
     }
