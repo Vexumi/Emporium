@@ -3,6 +3,7 @@ using Emporium.Models;
 using Emporium.ViewModels.UserControls;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Emporium.Views.UserControls
 {
@@ -24,6 +25,11 @@ namespace Emporium.Views.UserControls
 
             this._viewModel = new ProductsControlViewModel();
             DataContext = this._viewModel;
+        }
+
+        private void OnRowDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            this._viewModel.OnRowDoubleClick(sender, e);
         }
     }
 }

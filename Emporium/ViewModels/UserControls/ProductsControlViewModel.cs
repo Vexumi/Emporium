@@ -1,9 +1,13 @@
-﻿using Emporium.Infrastructure.Based;
+﻿using Emporium.Infrastructure;
+using Emporium.Infrastructure.Based;
 using Emporium.Models;
 using Emporium.Services;
+using Emporium.Views.DialogWindows;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Emporium.ViewModels.UserControls
 {
@@ -40,6 +44,13 @@ namespace Emporium.ViewModels.UserControls
             this._products.Clear();
             products.ForEach(el => this._products.Add(el));
 
+        }
+        public void OnRowDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var row = (DataGridRow)sender;
+            var dialogWindow = new ProductDetailsWindow((Product)row.Item);
+
+            dialogWindow.ShowDialog();
         }
     }
 }

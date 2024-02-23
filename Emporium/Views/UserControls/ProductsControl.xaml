@@ -8,13 +8,18 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <DataGrid ItemsSource="{Binding Products}" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.ItemContainerStyle>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseDoubleClick" Handler="OnRowDoubleClick"/>
+                </Style>
+            </DataGrid.ItemContainerStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Артикул" Binding="{Binding ProductId}"/>
                 <DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Цена" Binding="{Binding Price}"/>
                 <DataGridTextColumn Header="Категория" Binding="{Binding Category}"/>
                 <DataGridTextColumn Header="Рейтинг" Binding="{Binding Rating}"/>
-                <DataGridTextColumn Header="Описание" Binding="{Binding Description}"/>
+                <DataGridTextColumn Header="Описание" Binding="{Binding Description}" MaxWidth="200"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
