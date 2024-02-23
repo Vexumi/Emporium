@@ -33,7 +33,7 @@ namespace Emporium.Services
 
         public async Task<List<EntityType>> GetAll(Paginator paginator)
         {
-            return await this.dbContext.Set<EntityType>().Skip(paginator.Offset).Take(paginator.TakeCount).ToListAsync();
+            return await this.GetAll(paginator.Offset, paginator.TakeCount);
         }
 
         public int Count()
