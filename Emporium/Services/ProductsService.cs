@@ -1,4 +1,5 @@
-﻿using Emporium.Models;
+﻿using Emporium.Infrastructure.Based;
+using Emporium.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

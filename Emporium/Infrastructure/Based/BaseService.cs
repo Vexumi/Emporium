@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Emporium.Services
+namespace Emporium.Infrastructure.Based
 {
     public abstract class BaseService
     {

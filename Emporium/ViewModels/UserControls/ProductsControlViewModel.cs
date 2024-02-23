@@ -1,4 +1,5 @@
-﻿using Emporium.Models;
+﻿using Emporium.Infrastructure.Based;
+using Emporium.Models;
 using Emporium.Services;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
