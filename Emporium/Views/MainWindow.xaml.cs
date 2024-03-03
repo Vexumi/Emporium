@@ -3,6 +3,7 @@ using Emporium.Services;
 using Emporium.ViewModels;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Emporium.Views
 {
@@ -11,15 +12,20 @@ namespace Emporium.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly MainViewModel mainViewModel;
         public MainWindow(User user, MainViewModel viewModel)
         {
             InitializeComponent();
 
+            this.mainViewModel = viewModel;
             viewModel.CurrentUser = user;
             viewModel.CurrentWindow = this;
             DataContext = viewModel;
         }
 
-        public User CurrentUser { get; set; }
+        private void OnRowDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            this.mainViewModel.OnRowDoubleClick(sender, e);
+        }
     }
 }

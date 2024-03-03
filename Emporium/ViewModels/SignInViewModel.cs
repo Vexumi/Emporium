@@ -71,7 +71,6 @@ namespace Emporium.ViewModels
         private void OpenMainWindow(User user)
         {
             var mainWindow = new MainWindow(user, this._mainViewModel);
-            mainWindow.CurrentUser = user;
             mainWindow.Show();
 
             CloseLoginWindow();

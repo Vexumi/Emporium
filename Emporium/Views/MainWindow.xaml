@@ -4,14 +4,43 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="516" Width="916" ResizeMode="NoResize">
+        Title="MainWindow" Height="540" Width="930" ResizeMode="NoResize">
     <Grid>
-        <StackPanel x:Name="StackPanelMenuButtons" HorizontalAlignment="Left" Width="188" Background="#FF828282">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="188"/>
+            <ColumnDefinition Width="197"/>
+            <ColumnDefinition Width="521*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0" Grid.RowSpan="3" x:Name="StackPanelMenuButtons" HorizontalAlignment="Left" Width="188" Background="#FF828282">
             <Button x:Name="ButtonProducts" Content="Товары" Height="45" Margin="0,0,0,10" Command="{Binding OpenWindowCommand}" CommandParameter="Products"/>
             <Button x:Name="ButtonOrders" Content="Заказы" Height="45" Margin="0,0,0,10" Command="{Binding OpenWindowCommand}" CommandParameter="Orders"/>
             <Button x:Name="ButtonPickPoints" Content="ПВЗ" Height="45" Margin="0,0,0,10" Command="{Binding OpenWindowCommand}" CommandParameter="PickPoints"/>
             <Button x:Name="ButtonEmployees" Content="Сотрудники" Height="45" Margin="0,0,0,10" Command="{Binding OpenWindowCommand}" CommandParameter="Employees"/>
         </StackPanel>
-        <DataGrid x:Name="MainTable" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="188,0,0,0"/>
+
+        <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+            <Button Content="Поиск" HorizontalAlignment="Center" VerticalAlignment="Center" Height="24" Width="88" Grid.Column="1" Margin="5,0,5,0"/>
+            <Button Content="Фильтр" HorizontalAlignment="Center" VerticalAlignment="Center" Height="24" Width="88" Grid.Column="1" Margin="5,0,5,0"/>
+            <Button Content="Сортировка" HorizontalAlignment="Center" VerticalAlignment="Center" Height="24" Width="88" Grid.Column="1" Margin="5,0,5,0"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="MainTable" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <DataGrid.ItemContainerStyle>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseDoubleClick" Handler="OnRowDoubleClick"/>
+                </Style>
+            </DataGrid.ItemContainerStyle>
+        </DataGrid>
+
+        <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+            <Button Content="Назад" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="105" Command="{Binding ChangePageCommand}" CommandParameter="Prev" Margin="5,0,5,0"/>
+            <Button Content="Дальше" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="105" Command="{Binding ChangePageCommand}" CommandParameter="Next" Grid.ColumnSpan="2" Margin="5,0,5,0"/>
+        </StackPanel>
     </Grid>
 </Window>
