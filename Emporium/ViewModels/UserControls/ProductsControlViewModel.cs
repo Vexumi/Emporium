@@ -3,6 +3,7 @@ using Emporium.Infrastructure.Based;
 using Emporium.Models;
 using Emporium.Services;
 using Emporium.Views.DialogWindows;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -46,16 +47,16 @@ namespace Emporium.ViewModels.UserControls
 
         public async Task LoadProducts()
         {
-            var products = await _productsService.GetAll(_paginator);
+            var products = await _productsService.GetAll(_paginator).ToListAsync();
             this._products.Clear();
             products.ForEach(el => this._products.Add(el));
         }
         public void OnRowDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var row = (DataGridRow)sender;
+/*            var row = (DataGridRow)sender;
             var dialogWindow = new ProductDetailsWindow((Product)row.Item, this._productsService);
 
-            dialogWindow.ShowDialog();
+            dialogWindow.ShowDialog();*/
         }
     }
 }

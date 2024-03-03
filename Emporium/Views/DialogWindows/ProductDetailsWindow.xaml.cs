@@ -1,5 +1,4 @@
 ﻿using Emporium.Models;
-using Emporium.Services;
 using Emporium.ViewModels.DialogWindows;
 using System.Windows;
 
@@ -10,10 +9,12 @@ namespace Emporium.Views.DialogWindows
     /// </summary>
     public partial class ProductDetailsWindow : Window
     {
-        public ProductDetailsWindow(Product product, ProductsService productsService)
+        public ProductDetailsWindow(Product product, ProductDetailsViewModel viewModel)
         {
             InitializeComponent();
-            DataContext = new ProductDetailsViewModel(this, product, productsService);
+            viewModel.CurrentProduct = product;
+            viewModel.CurrentWindow = this;
+            DataContext = viewModel;
         }
     }
 }

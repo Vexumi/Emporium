@@ -16,7 +16,7 @@ public class ProductDto
     [ColumnName("Цена")]
     public decimal Price { get; set; }
 
-    [ColumnName("Категоия")]
+    [ColumnName("Категория")]
     public string? Category { get; set; }
 
     [ColumnName("Оценка товара")]

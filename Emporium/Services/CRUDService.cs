@@ -1,7 +1,6 @@
 ﻿using Emporium.Infrastructure;
 using Emporium.Infrastructure.Based;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,14 +26,19 @@ namespace Emporium.Services
             await this.dbContext.SaveChangesAsync();
         }
 
-        public virtual async Task<List<EntityType>> GetAll(int offset = 0, int takeCount = 20)
+        public virtual IQueryable<EntityType> GetAll(int offset = 0, int takeCount = 20)
         {
-            return await this.dbContext.Set<EntityType>().Skip(offset).Take(takeCount).ToListAsync();
+            return this.dbContext.Set<EntityType>().Skip(offset).Take(takeCount);
         }
 
-        public virtual async Task<List<EntityType>> GetAll(Paginator paginator)
+        public virtual IQueryable<EntityType> GetAll(Paginator paginator)
         {
-            return await this.GetAll(paginator.Offset, paginator.TakeCount);
+            return this.GetAll(paginator.Offset, paginator.TakeCount);
+        }
+
+        public virtual IQueryable<EntityType?> FindById(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public virtual int Count()

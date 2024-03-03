@@ -5,7 +5,9 @@ using Emporium.Infrastructure.Enums;
 using Emporium.Models;
 using Emporium.Models.Dto;
 using Emporium.Services;
+using Emporium.ViewModels.DialogWindows;
 using Emporium.Views.DialogWindows;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -17,6 +19,7 @@ namespace Emporium.ViewModels
     public class MainViewModel : BaseViewModel
     {
         private readonly ProductsService _productsService;
+        private readonly ProductDetailsViewModel _productDetailsViewModel;
         private readonly IMapper _mapper;
 
         private User _user;
@@ -49,21 +52,31 @@ namespace Emporium.ViewModels
             }
         }
 
-        public MainViewModel(ProductsService productsService, IMapper mapper)
+        public MainViewModel(ProductsService productsService, IMapper mapper, ProductDetailsViewModel productDetailsViewModel)
         {
             this._productsService = productsService;
             this._mapper = mapper;
             this.OpenWindowCommand = new RelayCommand(async o => await OpenWindow(Enum.Parse<WindowType>(o.ToString())));
             this.ChangePageCommand = new RelayCommand(o => ChangePage(o.ToString()));
+            _productDetailsViewModel = productDetailsViewModel;
         }
 
-        public void OnRowDoubleClick(object sender, MouseButtonEventArgs e)
+        public async void OnRowDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            /*var row = (DataGridRow)sender;
-            var dialogWindow = new ProductDetailsWindow((Product)row.Item, this._productsService);
-
-            dialogWindow.ShowDialog();*/
-            MessageBox.Show("Hehe");
+            switch (this._openedWindow)
+            {
+                case WindowType.Products:
+                    {
+                        var row = (DataGridRow)sender;
+                        var item = (ProductDto)row.Item;
+                        var product = await this._productsService.FindById(item.ProductId).FirstOrDefaultAsync();
+                        var dialogWindow = new ProductDetailsWindow(product, this._productDetailsViewModel);
+                        dialogWindow.ShowDialog();
+                        break;
+                    }
+                default: break;
+            }
+            await this.ReloadPage();
         }
 
         private async Task ReloadPage()
@@ -72,7 +85,7 @@ namespace Emporium.ViewModels
             {
                 case WindowType.Products:
                     {
-                        var items = await this._productsService.GetAll(this._paginator);
+                        var items = await this._productsService.GetAll(this._paginator).ToListAsync();
                         this._dataGrid.ItemsSource = this._mapper.Map<ProductDto[]>(items);
                         break;
                     }

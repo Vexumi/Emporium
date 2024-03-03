@@ -7,6 +7,7 @@ using Emporium.Services;
 using Emporium.ViewModels;
 using AutoMapper;
 using Emporium.Infrastructure.MappingProfiles;
+using Emporium.ViewModels.DialogWindows;
 
 public class Program
 {
@@ -36,6 +37,7 @@ public class Program
                 // ViewModels
                 services.AddSingleton<SignInViewModel>();
                 services.AddSingleton<MainViewModel>();
+                services.AddSingleton<ProductDetailsViewModel>();
             })
             .Build();
 
