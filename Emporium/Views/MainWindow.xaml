@@ -30,7 +30,7 @@
             <Button Content="Сортировка" HorizontalAlignment="Center" VerticalAlignment="Center" Height="24" Width="88" Grid.Column="1" Margin="5,0,5,0"/>
         </StackPanel>
 
-        <DataGrid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="MainTable" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <DataGrid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="MainTable" d:ItemsSource="{d:SampleData ItemCount=5}" AutoGeneratingColumn="MainTable_AutoGeneratingColumn">
             <DataGrid.ItemContainerStyle>
                 <Style TargetType="DataGridRow">
                     <EventSetter Event="MouseDoubleClick" Handler="OnRowDoubleClick"/>

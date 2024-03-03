@@ -1,8 +1,9 @@
-﻿using Emporium.Models;
-using Emporium.Services;
+﻿using Emporium.Infrastructure;
+using Emporium.Models;
 using Emporium.ViewModels;
-using System.Diagnostics;
+using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Emporium.Views
@@ -26,6 +27,16 @@ namespace Emporium.Views
         private void OnRowDoubleClick(object sender, MouseButtonEventArgs e)
         {
             this.mainViewModel.OnRowDoubleClick(sender, e);
+        }
+
+        private void MainTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            var desc = e.PropertyDescriptor as PropertyDescriptor;
+            var att = desc.Attributes[typeof(ColumnNameAttribute)] as ColumnNameAttribute;
+            if (att != null)
+            {
+                e.Column.Header = att.Name;
+            }
         }
     }
 }

@@ -5,12 +5,21 @@ using Emporium;
 using Emporium.Views;
 using Emporium.Services;
 using Emporium.ViewModels;
+using AutoMapper;
+using Emporium.Infrastructure.MappingProfiles;
 
 public class Program
 {
     [STAThread]
     public static void Main()
     {
+        var mapperConfig = new MapperConfiguration(mc =>
+        {
+            mc.AddProfile(new MappingProfile());
+        });
+
+        IMapper mapper = mapperConfig.CreateMapper();
+
         var host = Host.CreateDefaultBuilder()
             .ConfigureServices(services =>
             {
@@ -22,6 +31,7 @@ public class Program
                 services.AddTransient<ApplicationContext>();
                 services.AddTransient<ProductsService>();
                 services.AddTransient<SignInService>();
+                services.AddSingleton(mapper);
 
                 // ViewModels
                 services.AddSingleton<SignInViewModel>();

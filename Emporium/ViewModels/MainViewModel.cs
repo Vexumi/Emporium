@@ -1,7 +1,9 @@
-﻿using Emporium.Infrastructure;
+﻿using AutoMapper;
+using Emporium.Infrastructure;
 using Emporium.Infrastructure.Based;
 using Emporium.Infrastructure.Enums;
 using Emporium.Models;
+using Emporium.Models.Dto;
 using Emporium.Services;
 using Emporium.Views.DialogWindows;
 using System;
@@ -15,6 +17,7 @@ namespace Emporium.ViewModels
     public class MainViewModel : BaseViewModel
     {
         private readonly ProductsService _productsService;
+        private readonly IMapper _mapper;
 
         private User _user;
         private Window _window;
@@ -46,9 +49,10 @@ namespace Emporium.ViewModels
             }
         }
 
-        public MainViewModel(ProductsService productsService)
+        public MainViewModel(ProductsService productsService, IMapper mapper)
         {
             this._productsService = productsService;
+            this._mapper = mapper;
             this.OpenWindowCommand = new RelayCommand(async o => await OpenWindow(Enum.Parse<WindowType>(o.ToString())));
             this.ChangePageCommand = new RelayCommand(o => ChangePage(o.ToString()));
         }
@@ -68,7 +72,8 @@ namespace Emporium.ViewModels
             {
                 case WindowType.Products:
                     {
-                        this._dataGrid.ItemsSource = await this._productsService.GetAll(this._paginator);
+                        var items = await this._productsService.GetAll(this._paginator);
+                        this._dataGrid.ItemsSource = this._mapper.Map<ProductDto[]>(items);
                         break;
                     }
                 default: break;
