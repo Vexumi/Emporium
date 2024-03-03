@@ -1,5 +1,6 @@
 ﻿using Emporium.Interfaces;
 using Emporium.Models;
+using Emporium.Services;
 using Emporium.ViewModels.UserControls;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -19,11 +20,11 @@ namespace Emporium.Views.UserControls
             await this._viewModel.LoadProducts();
         }
 
-        public ProductsControl()
+        public ProductsControl(ProductsService productsService)
         {
             InitializeComponent();
 
-            this._viewModel = new ProductsControlViewModel();
+            this._viewModel = new ProductsControlViewModel(productsService);
             DataContext = this._viewModel;
         }
 

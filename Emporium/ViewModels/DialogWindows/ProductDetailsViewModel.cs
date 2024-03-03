@@ -26,12 +26,12 @@ namespace Emporium.ViewModels.DialogWindows
         public ICommand SaveCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
 
-        public ProductDetailsViewModel(Window view, Product product)
+        public ProductDetailsViewModel(Window view, Product product, ProductsService productsService)
         {
             _view = view;
             CurrentProduct = product;
 
-            this._productsService = new ProductsService();
+            this._productsService = productsService;
             this.SaveCommand = new RelayCommand(async o => Save());
             this.DeleteCommand = new RelayCommand(o => Delete());
         }

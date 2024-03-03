@@ -4,7 +4,6 @@ using Emporium.Models;
 using Emporium.Services;
 using Emporium.Views.DialogWindows;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -29,9 +28,9 @@ namespace Emporium.ViewModels.UserControls
             }
         }
 
-        public ProductsControlViewModel()
+        public ProductsControlViewModel(ProductsService productsService)
         {
-            this._productsService = new ProductsService();
+            this._productsService = productsService;
             this._paginator = new Paginator(this._productsService.Count());
             this.ChangePageCommand = new RelayCommand(o => ChangePage(o.ToString()));
         }
@@ -45,13 +44,6 @@ namespace Emporium.ViewModels.UserControls
 
         }
 
-        public static async Task<ProductsControlViewModel> Build()
-        {
-            var entity = new ProductsControlViewModel();
-            await entity.LoadProducts();
-            return entity;
-        }
-
         public async Task LoadProducts()
         {
             var products = await _productsService.GetAll(_paginator);
@@ -61,7 +53,7 @@ namespace Emporium.ViewModels.UserControls
         public void OnRowDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var row = (DataGridRow)sender;
-            var dialogWindow = new ProductDetailsWindow((Product)row.Item);
+            var dialogWindow = new ProductDetailsWindow((Product)row.Item, this._productsService);
 
             dialogWindow.ShowDialog();
         }

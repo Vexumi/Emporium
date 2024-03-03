@@ -1,22 +1,23 @@
 ﻿using Emporium.Infrastructure;
 using Emporium.Infrastructure.Based;
 using Emporium.Infrastructure.Enums;
-using Emporium.Interfaces;
 using Emporium.Models;
-using Emporium.Views.UserControls;
+using Emporium.Services;
 using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using static Emporium.Infrastructure.WindowExtensions;
 namespace Emporium.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
+        private readonly ProductsService _productsService;
+
         private User _user;
-        private Window _view;
+        private Window _window;
+        private WindowType _openedWindow;
         public ICommand OpenWindowCommand { get; set; }
 
         public User CurrentUser
@@ -29,23 +30,31 @@ namespace Emporium.ViewModels
             }
         }
 
-        public MainViewModel(Window view, User user)
+        public Window CurrentWindow
         {
-            this._view = view;
-            this.CurrentUser = user;
+            get { return this._window; }
+            set
+            {
+                _window = value;
+                OnPropertyChanged("CurrentWindow");
+            }
+        }
 
+        public MainViewModel(ProductsService productsService)
+        {
+            this._productsService = productsService;
             this.OpenWindowCommand = new RelayCommand(async o => await OpenWindow(Enum.Parse<WindowType>(o.ToString())));
         }
 
         private async Task OpenWindow(WindowType windowType)
         {
+            this._openedWindow = windowType;
             switch (windowType)
             {
                 case WindowType.Products:
                     {
-                        var uc = new ProductsControl();
-                        AddControlToView(uc, this._view);
-                        await uc.LoadData();
+                        var table = (DataGrid)this._window.FindName("MainTable");
+                        table.ItemsSource = await this._productsService.GetAll();
                         break;
                     }
                 default: break;

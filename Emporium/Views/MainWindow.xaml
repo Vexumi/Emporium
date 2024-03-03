@@ -3,8 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Emporium.Views"
-        xmlns:controls="clr-namespace:Emporium.Views.UserControls"
         mc:Ignorable="d"
         Title="MainWindow" Height="516" Width="916" ResizeMode="NoResize">
     <Grid>
@@ -14,6 +12,6 @@
             <Button x:Name="ButtonPickPoints" Content="ПВЗ" Height="45" Margin="0,0,0,10" Command="{Binding OpenWindowCommand}" CommandParameter="PickPoints"/>
             <Button x:Name="ButtonEmployees" Content="Сотрудники" Height="45" Margin="0,0,0,10" Command="{Binding OpenWindowCommand}" CommandParameter="Employees"/>
         </StackPanel>
-        <DockPanel x:Name="DockPanel" Margin="188,0,0,0"/>
+        <DataGrid x:Name="MainTable" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="188,0,0,0"/>
     </Grid>
 </Window>

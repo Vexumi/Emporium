@@ -14,6 +14,11 @@ namespace Emporium.Services
     public class CRUDService<EntityType> : BaseService
         where EntityType : class
     {
+        public CRUDService(ApplicationContext context): base(context)
+        {
+            
+        }
+
         public async Task Save(EntityType entity)
         {
             this.dbContext.Set<EntityType>().Update(entity);

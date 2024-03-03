@@ -9,5 +9,11 @@ using System.Threading.Tasks;
 
 namespace Emporium.Services
 {
-    public class ProductsService: CRUDService<Product> { }
+    public class ProductsService: CRUDService<Product>
+    {
+        public ProductsService(ApplicationContext context): base(context)
+        {
+            
+        }
+    }
 }

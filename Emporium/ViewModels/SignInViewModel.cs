@@ -14,6 +14,7 @@ namespace Emporium.ViewModels
         public ICommand SignInButtonCommand { get; set; }
 
         private readonly SignInService _signInService;
+        private readonly MainViewModel _mainViewModel;
         private string _email;
         private string _password;
 
@@ -37,10 +38,12 @@ namespace Emporium.ViewModels
             }
         }
 
-        public SignInViewModel()
+        public SignInViewModel(SignInService signInService, MainViewModel mainViewModel)
         {
-            SignInButtonCommand = new RelayCommand(o => SignIn());
-            _signInService = new SignInService();
+            _signInService = signInService;
+            _mainViewModel = mainViewModel;
+
+            SignInButtonCommand = new RelayCommand(async o => await SignIn());
         }
 
         public async Task SignIn()
@@ -67,7 +70,8 @@ namespace Emporium.ViewModels
 
         private void OpenMainWindow(User user)
         {
-            MainWindow mainWindow = new MainWindow(user);
+            var mainWindow = new MainWindow(user, this._mainViewModel);
+            mainWindow.CurrentUser = user;
             mainWindow.Show();
 
             CloseLoginWindow();
