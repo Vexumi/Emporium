@@ -1,5 +1,7 @@
 ﻿using Emporium.Infrastructure;
 using Emporium.Infrastructure.Based;
+using Emporium.Infrastructure.Enums;
+using Emporium.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,7 +38,7 @@ namespace Emporium.Services
             return this.GetAll(paginator.Offset, paginator.TakeCount);
         }
 
-        public virtual IQueryable<EntityType?> FindById(int id)
+        public virtual IQueryable<EntityType> FindById(int id)
         {
             throw new NotImplementedException();
         }

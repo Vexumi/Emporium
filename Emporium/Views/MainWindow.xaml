@@ -3,9 +3,28 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:extensions="clr-namespace:Emporium.Infrastructure.Extensions"
+        xmlns:enums="clr-namespace:Emporium.Infrastructure.Enums"
         mc:Ignorable="d"
         Title="MainWindow" Height="540" Width="930" ResizeMode="NoResize">
-    <Grid>
+    <Window.Resources>
+        <ObjectDataProvider MethodName="GetValues"
+                ObjectType="{x:Type enums:SortBy}"
+                x:Key="SortByEnumValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enums:SortBy" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider MethodName="GetValues"
+                ObjectType="{x:Type enums:FilterBy}"
+                x:Key="FilterByEnumValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enums:FilterBy" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <extensions:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
+    </Window.Resources>
+    <Grid Background="#FF83B2FF">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="188"/>
             <ColumnDefinition Width="197"/>
@@ -13,24 +32,44 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        
-        <StackPanel Grid.Row="0" Grid.RowSpan="3" x:Name="StackPanelMenuButtons" HorizontalAlignment="Left" Width="188" Background="#FF828282">
-            <Button x:Name="ButtonProducts" Content="Товары" Height="45" Margin="0,0,0,10" Command="{Binding OpenWindowCommand}" CommandParameter="Products"/>
-            <Button x:Name="ButtonOrders" Content="Заказы" Height="45" Margin="0,0,0,10" Command="{Binding OpenWindowCommand}" CommandParameter="Orders"/>
-            <Button x:Name="ButtonPickPoints" Content="ПВЗ" Height="45" Margin="0,0,0,10" Command="{Binding OpenWindowCommand}" CommandParameter="PickPoints"/>
-            <Button x:Name="ButtonEmployees" Content="Сотрудники" Height="45" Margin="0,0,0,10" Command="{Binding OpenWindowCommand}" CommandParameter="Employees"/>
+
+        <StackPanel Grid.Row="0" Grid.RowSpan="4" x:Name="StackPanelMenuButtons" HorizontalAlignment="Left" Width="188" Background="#FFD8E9F9">
+            <Button x:Name="ButtonProducts" Content="Товары" Height="45" Margin="10,5,10,10" Command="{Binding OpenWindowCommand}" CommandParameter="Products"/>
+            <Button x:Name="ButtonOrders" Content="Заказы" Height="45" Margin="10,0,10,10" Command="{Binding OpenWindowCommand}" CommandParameter="Orders"/>
+            <Button x:Name="ButtonPickPoints" Content="ПВЗ" Height="45" Margin="10,0,10,10" Command="{Binding OpenWindowCommand}" CommandParameter="PickPoints"/>
+            <Button x:Name="ButtonEmployees" Content="Сотрудники" Height="45" Margin="10,0,10,10" Command="{Binding OpenWindowCommand}" CommandParameter="Employees"/>
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-            <Button Content="Поиск" HorizontalAlignment="Center" VerticalAlignment="Center" Height="24" Width="88" Grid.Column="1" Margin="5,0,5,0"/>
-            <Button Content="Фильтр" HorizontalAlignment="Center" VerticalAlignment="Center" Height="24" Width="88" Grid.Column="1" Margin="5,0,5,0"/>
-            <Button Content="Сортировка" HorizontalAlignment="Center" VerticalAlignment="Center" Height="24" Width="88" Grid.Column="1" Margin="5,0,5,0"/>
+            <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="Поиск" VerticalAlignment="Center" Width="320" FontSize="14"/>
+            <Button Content="Найти" HorizontalAlignment="Center" VerticalAlignment="Center" Height="24" Width="88" Grid.Column="1" Margin="5,0,5,0"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
+            <Label Content="Сортировка:" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <ComboBox x:Name="SortByCombobox" FontSize="14" Width="150" Height="25" SelectedItem="{Binding SortByField}" ItemsSource="{Binding Source={StaticResource SortByEnumValues}}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Label Content="Фильтр:" FontSize="14" Margin="20,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <ComboBox x:Name="FilterByCombobox" FontSize="14" Width="150" Height="25" SelectedItem="{Binding FilterByField}" ItemsSource="{Binding Source={StaticResource FilterByEnumValues}}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBox x:Name="filterDescriptionTextbox" Text="{Binding FilterDescriptionText}" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" FontSize="14" Height="25" IsEnabled="{Binding IsFilterDescriptionTextBoxEnabled}"/>
+            <Button Content="Применить" HorizontalAlignment="Center" VerticalAlignment="Center" Height="24" Width="88" Grid.Column="1" Margin="10,0,5,0" Command="{Binding ApplyFiltersCommand}"/>
         </StackPanel>
 
-        <DataGrid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="MainTable" d:ItemsSource="{d:SampleData ItemCount=5}" AutoGeneratingColumn="MainTable_AutoGeneratingColumn" IsReadOnly="True">
+        <DataGrid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="MainTable" d:ItemsSource="{d:SampleData ItemCount=5}" AutoGeneratingColumn="MainTable_AutoGeneratingColumn" IsReadOnly="True">
             <DataGrid.ItemContainerStyle>
                 <Style TargetType="DataGridRow">
                     <EventSetter Event="MouseDoubleClick" Handler="OnRowDoubleClick"/>
@@ -38,7 +77,7 @@
             </DataGrid.ItemContainerStyle>
         </DataGrid>
 
-        <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+        <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
             <Button Content="Назад" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="105" Command="{Binding ChangePageCommand}" CommandParameter="Prev" Margin="5,0,5,0"/>
             <Button Content="Дальше" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="105" Command="{Binding ChangePageCommand}" CommandParameter="Next" Grid.ColumnSpan="2" Margin="5,0,5,0"/>
         </StackPanel>

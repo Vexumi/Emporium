@@ -2,6 +2,7 @@
 using Emporium.Infrastructure;
 using Emporium.Infrastructure.Based;
 using Emporium.Infrastructure.Enums;
+using Emporium.Infrastructure.Extensions;
 using Emporium.Models;
 using Emporium.Models.Dto;
 using Emporium.Services;
@@ -9,7 +10,6 @@ using Emporium.ViewModels.DialogWindows;
 using Emporium.Views.DialogWindows;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,9 +27,14 @@ namespace Emporium.ViewModels
         private WindowType _openedWindow;
         private Paginator _paginator;
         private DataGrid _dataGrid;
+        private bool _isFilterDescriptionTextBoxEnabled = false;
+        private string _filterDescriptionText = "";
+        private SortBy _sortByField = SortBy.Unknown;
+        private FilterBy _filterByField = FilterBy.Unknown;
 
         public ICommand OpenWindowCommand { get; set; }
         public ICommand ChangePageCommand { get; set; }
+        public ICommand ApplyFiltersCommand { get; set; }
 
         public User CurrentUser
         {
@@ -52,13 +57,55 @@ namespace Emporium.ViewModels
             }
         }
 
+        public bool IsFilterDescriptionTextBoxEnabled
+        {
+            get { return this._isFilterDescriptionTextBoxEnabled; }
+            set
+            {
+                this._isFilterDescriptionTextBoxEnabled = value;
+                OnPropertyChanged("IsFilterDescriptionTextBoxEnabled");
+            }
+        }
+
+        public SortBy SortByField
+        {
+            get { return this._sortByField; }
+            set
+            {
+                this._sortByField = value;
+                OnPropertyChanged("SortByField");
+            }
+        }
+
+        public FilterBy FilterByField
+        {
+            get { return this._filterByField; }
+            set
+            {
+                this._filterByField = value;
+                OnPropertyChanged("FilterByField");
+            }
+        }
+
+        public string FilterDescriptionText
+        {
+            get { return this._filterDescriptionText; }
+            set
+            {
+                this._filterDescriptionText = value;
+                OnPropertyChanged("FilterDescriptionText");
+            }
+        }
+
         public MainViewModel(ProductsService productsService, IMapper mapper, ProductDetailsViewModel productDetailsViewModel)
         {
             this._productsService = productsService;
             this._mapper = mapper;
+            this._productDetailsViewModel = productDetailsViewModel;
+
             this.OpenWindowCommand = new RelayCommand(async o => await OpenWindow(Enum.Parse<WindowType>(o.ToString())));
-            this.ChangePageCommand = new RelayCommand(o => ChangePage(o.ToString()));
-            _productDetailsViewModel = productDetailsViewModel;
+            this.ChangePageCommand = new RelayCommand(async o => await ChangePage(o.ToString()));
+            this.ApplyFiltersCommand = new RelayCommand(async o => await ReloadPage());
         }
 
         public async void OnRowDoubleClick(object sender, MouseButtonEventArgs e)
@@ -85,7 +132,10 @@ namespace Emporium.ViewModels
             {
                 case WindowType.Products:
                     {
-                        var items = await this._productsService.GetAll(this._paginator).ToListAsync();
+                        var items = await this._productsService
+                            .GetAll(this._paginator)
+                            .ApplyFilters(SortByField, FilterByField, FilterDescriptionText) //fix bug 
+                            .ToListAsync();
                         this._dataGrid.ItemsSource = this._mapper.Map<ProductDto[]>(items);
                         break;
                     }

@@ -1,4 +1,5 @@
 ﻿using Emporium.Infrastructure;
+using Emporium.Infrastructure.Enums;
 using Emporium.Models;
 using Emporium.ViewModels;
 using System.ComponentModel;
@@ -22,11 +23,25 @@ namespace Emporium.Views
             viewModel.CurrentUser = user;
             viewModel.CurrentWindow = this;
             DataContext = viewModel;
+
+            FilterByCombobox.SelectionChanged += ComboBox_SelectionChanged;
         }
 
         private void OnRowDoubleClick(object sender, MouseButtonEventArgs e)
         {
             this.mainViewModel.OnRowDoubleClick(sender, e);
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (FilterByCombobox.SelectedItem is FilterBy.Unknown)
+            {
+                this.mainViewModel.IsFilterDescriptionTextBoxEnabled = false;
+            }
+            else
+            {
+                this.mainViewModel.IsFilterDescriptionTextBoxEnabled = true;
+            }
         }
 
         private void MainTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
