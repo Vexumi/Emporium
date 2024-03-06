@@ -9,10 +9,10 @@ namespace Emporium.Views.DialogWindows
     /// </summary>
     public partial class ProductDetailsWindow : Window
     {
-        public ProductDetailsWindow(Product product, ProductDetailsViewModel viewModel)
+        public ProductDetailsWindow(ProductDetailsViewModel viewModel)
         {
             InitializeComponent();
-            viewModel.CurrentProduct = product;
+
             viewModel.CurrentWindow = this;
             DataContext = viewModel;
         }

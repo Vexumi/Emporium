@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace Emporium.Services
 {
-    public class PickPointsService : CRUDService<PickupPoint>
+    public class PickupPointsService : CRUDService<PickupPoint>
     {
-        public PickPointsService(ApplicationContext context) : base(context)
+        public PickupPointsService(ApplicationContext context) : base(context)
         {
 
         }

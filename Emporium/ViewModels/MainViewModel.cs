@@ -21,9 +21,10 @@ namespace Emporium.ViewModels
         private readonly ProductsService _productsService;
         private readonly OrdersService _ordersService;
         private readonly EmployeesService _employeesService;
-        private readonly PickPointsService _pickpointsService;
+        private readonly PickupPointsService _pickpointsService;
 
         private readonly ProductDetailsViewModel _productDetailsViewModel;
+        private readonly OrderDetailsViewModel _orderDetailsViewModel;
         private readonly IMapper _mapper;
 
         private User _user;
@@ -106,8 +107,9 @@ namespace Emporium.ViewModels
             ProductsService productsService,
             OrdersService ordersService,
             EmployeesService employeesService,
-            PickPointsService pickpointsService,
+            PickupPointsService pickpointsService,
             ProductDetailsViewModel productDetailsViewModel,
+            OrderDetailsViewModel orderDetailsViewModel,
             IMapper mapper)
         {
             this._productsService = productsService;
@@ -116,6 +118,7 @@ namespace Emporium.ViewModels
             this._pickpointsService = pickpointsService;
 
             this._productDetailsViewModel = productDetailsViewModel;
+            this._orderDetailsViewModel = orderDetailsViewModel;
 
             this._mapper = mapper;
 
@@ -130,16 +133,32 @@ namespace Emporium.ViewModels
             {
                 case WindowType.Products:
                     {
-                        var row = (DataGridRow)sender;
-                        var item = (ProductDto)row.Item;
-                        var product = await this._productsService.FindById(item.ProductId).FirstOrDefaultAsync();
-                        var dialogWindow = new ProductDetailsWindow(product, this._productDetailsViewModel);
+                        var product = await this._productsService.FindById(GetItemFromTable<ProductDto>(sender).ProductId).FirstOrDefaultAsync();
+
+                        this._productDetailsViewModel.Item = product;
+                        var dialogWindow = new ProductDetailsWindow(this._productDetailsViewModel);
+                        dialogWindow.ShowDialog();
+                        break;
+                    }
+                case WindowType.Orders:
+                    {
+                        var orders = await this._ordersService.FindById(GetItemFromTable<OrderDto>(sender).OrderId).FirstOrDefaultAsync();
+
+                        this._orderDetailsViewModel.Item = orders;
+                        var dialogWindow = new OrderDetailsWindow(this._orderDetailsViewModel);
                         dialogWindow.ShowDialog();
                         break;
                     }
                 default: break;
             }
             await this.ReloadPage();
+        }
+
+        private T GetItemFromTable<T>(object sender)
+        {
+            var row = (DataGridRow)sender;
+            var item = (T)row.Item;
+            return item;
         }
 
         private async Task ReloadPage()
@@ -198,8 +217,10 @@ namespace Emporium.ViewModels
 
         private async Task ChangePage(string page)
         {
-            if (page == "Next") _paginator.NextPage();
-            else _paginator.PrevPage();
+            if (this._paginator == null) return;
+
+            if (page == "Next") this._paginator.NextPage();
+            else this._paginator.PrevPage();
 
             await this.ReloadPage();
         }

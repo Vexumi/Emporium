@@ -4,6 +4,8 @@ namespace Emporium.Models.Dto
 {
     public class PickPointDto
     {
+        public int PickupPointId { get; set; }
+
         [ColumnName("Название")]
         public string Name { get; set; } = null!;
 
