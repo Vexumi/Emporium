@@ -71,6 +71,16 @@ namespace Emporium.ViewModels
             }
         }
 
+        public string FilterDescriptionText
+        {
+            get { return this._filterDescriptionText; }
+            set
+            {
+                this._filterDescriptionText = value;
+                OnPropertyChanged("FilterDescriptionText");
+            }
+        }
+
         public SortBy SortByField
         {
             get { return this._sortByField; }
@@ -91,15 +101,6 @@ namespace Emporium.ViewModels
             }
         }
 
-        public string FilterDescriptionText
-        {
-            get { return this._filterDescriptionText; }
-            set
-            {
-                this._filterDescriptionText = value;
-                OnPropertyChanged("FilterDescriptionText");
-            }
-        }
 
         public MainViewModel(
             ProductsService productsService,
@@ -160,6 +161,18 @@ namespace Emporium.ViewModels
                         this._dataGrid.ItemsSource = this._mapper.Map<OrderDto[]>(items);
                         break;
                     }
+                case WindowType.Employees:
+                    {
+                        var items = await this._employeesService.GetAll(this._paginator).ToListAsync();
+                        this._dataGrid.ItemsSource = this._mapper.Map<EmployeeDto[]>(items);
+                        break;
+                    }
+                case WindowType.PickPoints:
+                    {
+                        var items = await this._pickpointsService.GetAll(this._paginator).ToListAsync();
+                        this._dataGrid.ItemsSource = this._mapper.Map<PickPointDto[]>(items);
+                        break;
+                    }
                 default: break;
             }
         }
@@ -170,9 +183,10 @@ namespace Emporium.ViewModels
             {
                 case WindowType.Products: return this._productsService.Count();
                 case WindowType.Orders: return this._ordersService.Count();
-                default: break;
+                case WindowType.Employees: return this._employeesService.Count();
+                case WindowType.PickPoints: return this._pickpointsService.Count();
+                default: return 0;
             }
-            return 0;
         }
 
         private async Task OpenWindow(WindowType windowType)
