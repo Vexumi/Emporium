@@ -11,7 +11,7 @@ namespace Emporium.Infrastructure.Enums
         None,
         Products,
         Orders,
-        PickPoints,
+        PickupPoints,
         Employees
     }
 }

@@ -25,6 +25,8 @@ namespace Emporium.ViewModels
 
         private readonly ProductDetailsViewModel _productDetailsViewModel;
         private readonly OrderDetailsViewModel _orderDetailsViewModel;
+        private readonly EmployeeDetailsViewModel _employeeDetailsViewModel;
+        private readonly PickupPointDetailsViewModel _pickupPointDetailsViewModel;
         private readonly IMapper _mapper;
 
         private User _user;
@@ -110,6 +112,8 @@ namespace Emporium.ViewModels
             PickupPointsService pickpointsService,
             ProductDetailsViewModel productDetailsViewModel,
             OrderDetailsViewModel orderDetailsViewModel,
+            EmployeeDetailsViewModel employeeDetailsViewModel,
+            PickupPointDetailsViewModel pickupPointDetailsViewModel,
             IMapper mapper)
         {
             this._productsService = productsService;
@@ -119,6 +123,8 @@ namespace Emporium.ViewModels
 
             this._productDetailsViewModel = productDetailsViewModel;
             this._orderDetailsViewModel = orderDetailsViewModel;
+            this._employeeDetailsViewModel = employeeDetailsViewModel;
+            this._pickupPointDetailsViewModel = pickupPointDetailsViewModel;
 
             this._mapper = mapper;
 
@@ -146,6 +152,24 @@ namespace Emporium.ViewModels
 
                         this._orderDetailsViewModel.Item = orders;
                         var dialogWindow = new OrderDetailsWindow(this._orderDetailsViewModel);
+                        dialogWindow.ShowDialog();
+                        break;
+                    }
+                case WindowType.Employees:
+                    {
+                        var employees = await this._employeesService.FindById(GetItemFromTable<EmployeeDto>(sender).EmployeeId).FirstOrDefaultAsync();
+
+                        this._employeeDetailsViewModel.Item = employees;
+                        var dialogWindow = new EmployeeDetailsWindow(this._employeeDetailsViewModel);
+                        dialogWindow.ShowDialog();
+                        break;
+                    }
+                case WindowType.PickupPoints:
+                    {
+                        var pickupPoints = await this._pickpointsService.FindById(GetItemFromTable<PickPointDto>(sender).PickupPointId).FirstOrDefaultAsync();
+
+                        this._pickupPointDetailsViewModel.Item = pickupPoints;
+                        var dialogWindow = new PickupPointDetailsWindow(this._pickupPointDetailsViewModel);
                         dialogWindow.ShowDialog();
                         break;
                     }
@@ -186,7 +210,7 @@ namespace Emporium.ViewModels
                         this._dataGrid.ItemsSource = this._mapper.Map<EmployeeDto[]>(items);
                         break;
                     }
-                case WindowType.PickPoints:
+                case WindowType.PickupPoints:
                     {
                         var items = await this._pickpointsService.GetAll(this._paginator).ToListAsync();
                         this._dataGrid.ItemsSource = this._mapper.Map<PickPointDto[]>(items);
@@ -203,7 +227,7 @@ namespace Emporium.ViewModels
                 case WindowType.Products: return this._productsService.Count();
                 case WindowType.Orders: return this._ordersService.Count();
                 case WindowType.Employees: return this._employeesService.Count();
-                case WindowType.PickPoints: return this._pickpointsService.Count();
+                case WindowType.PickupPoints: return this._pickpointsService.Count();
                 default: return 0;
             }
         }
