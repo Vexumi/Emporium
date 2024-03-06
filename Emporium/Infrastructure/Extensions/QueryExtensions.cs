@@ -26,6 +26,9 @@ namespace Emporium.Infrastructure.Extensions
                 case (FilterBy.NameDoesNotContain): return source.Where(p => !p.Name.Contains(filterDesc));
                 case (FilterBy.CategoryContains): return source.Where(p => p.Category != null && p.Category.Contains(filterDesc));
                 case (FilterBy.CategoryDoesNotContain): return source.Where(p => p.Category != null && !p.Category.Contains(filterDesc));
+                case (FilterBy.FullnameContains): return source.Where(p => p.Seller != null && p.Seller.User.FullName.Contains(filterDesc));
+                case (FilterBy.FullnameDoesNotContain): return source.Where(p => p.Seller != null && !p.Seller.User.FullName.Contains(filterDesc));
+
                 default: return source;
             }
         }

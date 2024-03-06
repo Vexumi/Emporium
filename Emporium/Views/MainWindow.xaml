@@ -47,6 +47,7 @@
         <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
             <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="Поиск" VerticalAlignment="Center" Width="320" FontSize="14"/>
             <Button Content="Найти" HorizontalAlignment="Center" VerticalAlignment="Center" Height="24" Width="88" Grid.Column="1" Margin="5,0,5,0"/>
+            <Button Content="Добавить запись" Margin="20,0,0,0"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
             <Label Content="Сортировка:" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" />

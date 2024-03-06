@@ -2,9 +2,6 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <Compile Update="Views\Components\LabelTextboxComponent.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\DialogWindows\ProductDetailsWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -14,14 +11,8 @@
     <Compile Update="Views\SignInWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\UserControls\ProductsControl.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\Components\LabelTextboxComponent.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Views\DialogWindows\ProductDetailsWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -29,9 +20,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\SignInWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\UserControls\ProductsControl.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

@@ -31,6 +31,7 @@ public class Program
                 // Services
                 services.AddTransient<ApplicationContext>();
                 services.AddTransient<ProductsService>();
+                services.AddTransient<OrdersService>();
                 services.AddTransient<SignInService>();
                 services.AddSingleton(mapper);
 
