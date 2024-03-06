@@ -19,6 +19,10 @@ namespace Emporium.ViewModels
     public class MainViewModel : BaseViewModel
     {
         private readonly ProductsService _productsService;
+        private readonly OrdersService _ordersService;
+        private readonly EmployeesService _employeesService;
+        private readonly PickPointsService _pickpointsService;
+
         private readonly ProductDetailsViewModel _productDetailsViewModel;
         private readonly IMapper _mapper;
 
@@ -97,11 +101,22 @@ namespace Emporium.ViewModels
             }
         }
 
-        public MainViewModel(ProductsService productsService, IMapper mapper, ProductDetailsViewModel productDetailsViewModel)
+        public MainViewModel(
+            ProductsService productsService,
+            OrdersService ordersService,
+            EmployeesService employeesService,
+            PickPointsService pickpointsService,
+            ProductDetailsViewModel productDetailsViewModel,
+            IMapper mapper)
         {
             this._productsService = productsService;
-            this._mapper = mapper;
+            this._ordersService = ordersService;
+            this._employeesService = employeesService;
+            this._pickpointsService = pickpointsService;
+
             this._productDetailsViewModel = productDetailsViewModel;
+
+            this._mapper = mapper;
 
             this.OpenWindowCommand = new RelayCommand(async o => await OpenWindow(Enum.Parse<WindowType>(o.ToString())));
             this.ChangePageCommand = new RelayCommand(async o => await ChangePage(o.ToString()));
@@ -139,6 +154,12 @@ namespace Emporium.ViewModels
                         this._dataGrid.ItemsSource = this._mapper.Map<ProductDto[]>(items);
                         break;
                     }
+                case WindowType.Orders:
+                    {
+                        var items = await this._ordersService.GetAll(this._paginator).ToListAsync();
+                        this._dataGrid.ItemsSource = this._mapper.Map<OrderDto[]>(items);
+                        break;
+                    }
                 default: break;
             }
         }
@@ -148,6 +169,7 @@ namespace Emporium.ViewModels
             switch (this._openedWindow)
             {
                 case WindowType.Products: return this._productsService.Count();
+                case WindowType.Orders: return this._ordersService.Count();
                 default: break;
             }
             return 0;

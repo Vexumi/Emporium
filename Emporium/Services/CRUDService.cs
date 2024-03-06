@@ -1,7 +1,6 @@
 ﻿using Emporium.Infrastructure;
 using Emporium.Infrastructure.Based;
-using Emporium.Infrastructure.Enums;
-using Emporium.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,7 +29,7 @@ namespace Emporium.Services
 
         public virtual IQueryable<EntityType> GetAll(int offset = 0, int takeCount = 20)
         {
-            return this.dbContext.Set<EntityType>().Skip(offset).Take(takeCount);
+            return this.dbContext.Set<EntityType>().AsNoTracking().Skip(offset).Take(takeCount);
         }
 
         public virtual IQueryable<EntityType> GetAll(Paginator paginator)
