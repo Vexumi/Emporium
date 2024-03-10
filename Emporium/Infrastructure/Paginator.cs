@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Emporium.Infrastructure.Enums;
 
 namespace Emporium.Infrastructure
 {
@@ -11,6 +7,9 @@ namespace Emporium.Infrastructure
         protected int _totalElements;
         public int Offset { get; protected set; } = 0;
         public int TakeCount { get; protected set; }
+        public SortBy SortSettings { get; set; } = SortBy.Unknown;
+        public FilterBy FilterSettings { get; set; } = FilterBy.Unknown;
+        public string FilterOption { get; set; }
 
         public Paginator(int TotalElements, int TakeCount = 20)
         {

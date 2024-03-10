@@ -10,16 +10,15 @@ namespace Emporium.Services
         {
 
         }
-        public override IQueryable<Order> GetAll(int offset = 0, int takeCount = 20)
+        public override IQueryable<Order> GetAll()
         {
             return this.dbContext.Set<Order>()
+                .AsNoTracking()
                 .Include(p => p.Customer)
                     .ThenInclude(s => s.User)
                 .Include(p => p.Employee)
                     .ThenInclude(s => s.User)
-                .Include(p => p.OrderDetails)
-                .Skip(offset)
-                .Take(takeCount);
+                .Include(p => p.OrderDetails);
         }
 
         public override IQueryable<Order?> FindById(int id)

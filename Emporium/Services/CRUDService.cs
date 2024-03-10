@@ -1,5 +1,6 @@
 ﻿using Emporium.Infrastructure;
 using Emporium.Infrastructure.Based;
+using Emporium.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -10,10 +11,7 @@ namespace Emporium.Services
     public class CRUDService<EntityType> : BaseService
         where EntityType : class
     {
-        public CRUDService(ApplicationContext context) : base(context)
-        {
-
-        }
+        public CRUDService(ApplicationContext context) : base(context) { }
 
         public virtual async Task Save(EntityType entity)
         {
@@ -27,14 +25,16 @@ namespace Emporium.Services
             await this.dbContext.SaveChangesAsync();
         }
 
-        public virtual IQueryable<EntityType> GetAll(int offset = 0, int takeCount = 20)
+        public virtual IQueryable<EntityType> GetAll()
         {
-            return this.dbContext.Set<EntityType>().AsNoTracking().Skip(offset).Take(takeCount);
+            return this.dbContext.Set<EntityType>().AsNoTracking();
         }
 
         public virtual IQueryable<EntityType> GetAll(Paginator paginator)
         {
-            return this.GetAll(paginator.Offset, paginator.TakeCount);
+            return this.GetAll()
+                .ApplyFilters(paginator.SortSettings, paginator.FilterSettings, paginator.FilterOption)
+                .ApplyOffset(paginator.Offset, paginator.TakeCount);
         }
 
         public virtual IQueryable<EntityType> FindById(int id)

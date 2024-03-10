@@ -1,6 +1,10 @@
 ﻿using Emporium.Infrastructure.Enums;
 using Emporium.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Identity.Client;
+using System.CodeDom;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Emporium.Infrastructure.Extensions
 {
@@ -36,6 +40,16 @@ namespace Emporium.Infrastructure.Extensions
         public static IQueryable<Product> ApplyFilters(this IQueryable<Product> source, SortBy sortBy, FilterBy filterBy, string filterDesc)
         {
             return source.HandleFilters(filterBy, filterDesc).HandleSort(sortBy);
+        }
+
+        public static IQueryable<T> ApplyFilters<T>(this IQueryable<T> source, SortBy sortBy, FilterBy filterBy, string filterDesc)
+        {
+            return source;
+        }
+
+        public static IQueryable<EntityType> ApplyOffset<EntityType>(this IQueryable<EntityType> source, int offset = 0, int takeCount = 20)
+        {
+            return source.Skip(offset).Take(takeCount);
         }
     }
 }

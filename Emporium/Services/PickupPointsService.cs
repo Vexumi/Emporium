@@ -10,12 +10,11 @@ namespace Emporium.Services
         {
 
         }
-        public override IQueryable<PickupPoint> GetAll(int offset = 0, int takeCount = 20)
+        public override IQueryable<PickupPoint> GetAll()
         {
             return this.dbContext.Set<PickupPoint>()
-                .Include(p => p.Employees)
-                .Skip(offset)
-                .Take(takeCount);
+                .AsNoTracking()
+                .Include(p => p.Employees);
         }
 
         public override IQueryable<PickupPoint> FindById(int id)

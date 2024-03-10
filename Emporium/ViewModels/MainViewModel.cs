@@ -2,7 +2,6 @@
 using Emporium.Infrastructure;
 using Emporium.Infrastructure.Based;
 using Emporium.Infrastructure.Enums;
-using Emporium.Infrastructure.Extensions;
 using Emporium.Models;
 using Emporium.Models.Dto;
 using Emporium.Services;
@@ -11,7 +10,6 @@ using Emporium.Views.DialogWindows;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 namespace Emporium.ViewModels
@@ -29,13 +27,12 @@ namespace Emporium.ViewModels
         private readonly PickupPointDetailsViewModel _pickupPointDetailsViewModel;
         private readonly IMapper _mapper;
 
+        private object _items;
+
         private User _user;
         private WindowType _openedWindow;
         private Paginator _paginator;
         private bool _isFilterDescriptionTextBoxEnabled = false;
-        private string _filterDescriptionText = "";
-        private SortBy _sortByField = SortBy.Unknown;
-        private FilterBy _filterByField = FilterBy.Unknown;
 
         public ICommand OpenWindowCommand { get; set; }
         public ICommand ChangePageCommand { get; set; }
@@ -63,30 +60,30 @@ namespace Emporium.ViewModels
 
         public string FilterDescriptionText
         {
-            get { return this._filterDescriptionText; }
+            get { return this._paginator.FilterOption; }
             set
             {
-                this._filterDescriptionText = value;
+                this._paginator.FilterOption = value;
                 OnPropertyChanged("FilterDescriptionText");
             }
         }
 
         public SortBy SortByField
         {
-            get { return this._sortByField; }
+            get { return this._paginator.SortSettings; }
             set
             {
-                this._sortByField = value;
+                this._paginator.SortSettings = value;
                 OnPropertyChanged("SortByField");
             }
         }
 
         public FilterBy FilterByField
         {
-            get { return this._filterByField; }
+            get { return this._paginator.FilterSettings; }
             set
             {
-                this._filterByField = value;
+                this._paginator.FilterSettings = value;
                 OnPropertyChanged("FilterByField");
             }
         }
@@ -120,12 +117,11 @@ namespace Emporium.ViewModels
             this.ApplyFiltersCommand = new RelayCommand(async o => await ReloadPage());
         }
 
-        private object _items;
-
         public object Items
         {
-            get {  return _items; }
-            set { 
+            get { return _items; }
+            set
+            {
                 _items = value;
                 OnPropertyChanged(nameof(Items));
             }
@@ -189,10 +185,7 @@ namespace Emporium.ViewModels
             {
                 case WindowType.Products:
                     {
-                        var items = await this._productsService
-                            .GetAll(this._paginator)
-                            .ApplyFilters(SortByField, FilterByField, FilterDescriptionText) //fix bug 
-                            .ToListAsync();
+                        var items = await this._productsService.GetAll(this._paginator).ToListAsync();
                         this.Items = this._mapper.Map<ProductDto[]>(items);
                         break;
                     }
