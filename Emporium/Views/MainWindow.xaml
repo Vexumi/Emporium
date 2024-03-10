@@ -70,7 +70,7 @@
             <Button Content="Применить" HorizontalAlignment="Center" VerticalAlignment="Center" Height="24" Width="88" Grid.Column="1" Margin="10,0,5,0" Command="{Binding ApplyFiltersCommand}"/>
         </StackPanel>
 
-        <DataGrid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="MainTable" d:ItemsSource="{d:SampleData ItemCount=5}" AutoGeneratingColumn="MainTable_AutoGeneratingColumn" IsReadOnly="True">
+        <DataGrid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="MainTable" ItemsSource="{Binding Items}" AutoGeneratingColumn="MainTable_AutoGeneratingColumn" IsReadOnly="True">
             <DataGrid.ItemContainerStyle>
                 <Style TargetType="DataGridRow">
                     <EventSetter Event="MouseDoubleClick" Handler="OnRowDoubleClick"/>

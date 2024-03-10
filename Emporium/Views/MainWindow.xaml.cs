@@ -21,7 +21,6 @@ namespace Emporium.Views
 
             this.mainViewModel = viewModel;
             viewModel.CurrentUser = user;
-            viewModel.CurrentWindow = this;
             DataContext = viewModel;
 
             FilterByCombobox.SelectionChanged += ComboBox_SelectionChanged;

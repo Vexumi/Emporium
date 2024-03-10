@@ -30,10 +30,8 @@ namespace Emporium.ViewModels
         private readonly IMapper _mapper;
 
         private User _user;
-        private Window _window;
         private WindowType _openedWindow;
         private Paginator _paginator;
-        private DataGrid _dataGrid;
         private bool _isFilterDescriptionTextBoxEnabled = false;
         private string _filterDescriptionText = "";
         private SortBy _sortByField = SortBy.Unknown;
@@ -50,17 +48,6 @@ namespace Emporium.ViewModels
             {
                 _user = value;
                 OnPropertyChanged("CurrentUser");
-            }
-        }
-
-        public Window CurrentWindow
-        {
-            get { return this._window; }
-            set
-            {
-                this._window = value;
-                _dataGrid = (DataGrid)this._window.FindName("MainTable");
-                OnPropertyChanged("CurrentWindow");
             }
         }
 
@@ -133,6 +120,17 @@ namespace Emporium.ViewModels
             this.ApplyFiltersCommand = new RelayCommand(async o => await ReloadPage());
         }
 
+        private object _items;
+
+        public object Items
+        {
+            get {  return _items; }
+            set { 
+                _items = value;
+                OnPropertyChanged(nameof(Items));
+            }
+        }
+
         public async void OnRowDoubleClick(object sender, MouseButtonEventArgs e)
         {
             switch (this._openedWindow)
@@ -195,25 +193,25 @@ namespace Emporium.ViewModels
                             .GetAll(this._paginator)
                             .ApplyFilters(SortByField, FilterByField, FilterDescriptionText) //fix bug 
                             .ToListAsync();
-                        this._dataGrid.ItemsSource = this._mapper.Map<ProductDto[]>(items);
+                        this.Items = this._mapper.Map<ProductDto[]>(items);
                         break;
                     }
                 case WindowType.Orders:
                     {
                         var items = await this._ordersService.GetAll(this._paginator).ToListAsync();
-                        this._dataGrid.ItemsSource = this._mapper.Map<OrderDto[]>(items);
+                        this.Items = this._mapper.Map<OrderDto[]>(items);
                         break;
                     }
                 case WindowType.Employees:
                     {
                         var items = await this._employeesService.GetAll(this._paginator).ToListAsync();
-                        this._dataGrid.ItemsSource = this._mapper.Map<EmployeeDto[]>(items);
+                        this.Items = this._mapper.Map<EmployeeDto[]>(items);
                         break;
                     }
                 case WindowType.PickupPoints:
                     {
                         var items = await this._pickpointsService.GetAll(this._paginator).ToListAsync();
-                        this._dataGrid.ItemsSource = this._mapper.Map<PickPointDto[]>(items);
+                        this.Items = this._mapper.Map<PickPointDto[]>(items);
                         break;
                     }
                 default: break;
