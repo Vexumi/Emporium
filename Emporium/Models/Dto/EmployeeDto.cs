@@ -5,7 +5,7 @@ namespace Emporium.Models.Dto
     public class EmployeeDto
     {
         [ColumnName("Личный номер")]
-        public int EmployeeId { get; set; }
+        public int Id { get; set; }
 
         [ColumnName("ФИО")]
         public string FullName { get; set; } = null!;

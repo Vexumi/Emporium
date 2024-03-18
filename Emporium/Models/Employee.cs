@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Emporium.Infrastructure.Based;
 using System.Collections.Generic;
 
 namespace Emporium.Models;
 
-public partial class Employee
+public partial class Employee : BaseEntity
 {
-    public int EmployeeId { get; set; }
-
     public string? Position { get; set; }
 
     public decimal? Salary { get; set; }

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Emporium.Infrastructure.Based;
 
 namespace Emporium.Models;
 
-public partial class OrderDetail
+public partial class OrderDetail : BaseEntity
 {
-    public int OrderDetailId { get; set; }
-
     public int? OrderId { get; set; }
 
     public int? ProductId { get; set; }

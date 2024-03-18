@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Emporium.Infrastructure.Based;
 using System.Collections.Generic;
 
 namespace Emporium.Models;
 
-public partial class User
+public partial class User : BaseEntity
 {
-    public int UserId { get; set; }
-
     public string FullName { get; set; } = null!;
 
     public string Phone { get; set; } = null!;

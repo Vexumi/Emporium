@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Emporium.Services
 {
-    public class ProductsService : CRUDService<Product>, IProductsService
+    public class ProductsService : CRUDService<Product>
     {
         public ProductsService(ApplicationContext context) : base(context)
         {
@@ -21,7 +21,7 @@ namespace Emporium.Services
 
         public override IQueryable<Product?> FindById(int id)
         {
-            return this.dbContext.Set<Product>().Where(p => p.ProductId == id);
+            return this.dbContext.Set<Product>().Where(p => p.Id == id);
         }
     }
 }

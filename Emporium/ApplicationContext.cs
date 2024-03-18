@@ -37,9 +37,9 @@ public partial class ApplicationContext : DbContext
     {
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasKey(e => e.CustomerId).HasName("PK__Customer__A4AE64B8AEFB4939");
+            entity.HasKey(e => e.Id).HasName("PK__Customer__A4AE64B8AEFB4939");
 
-            entity.Property(e => e.CustomerId)
+            entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("CustomerID");
             entity.Property(e => e.CardNumber).HasMaxLength(19);
@@ -53,9 +53,9 @@ public partial class ApplicationContext : DbContext
 
         modelBuilder.Entity<Employee>(entity =>
         {
-            entity.HasKey(e => e.EmployeeId).HasName("PK__Employee__7AD04FF12592BDDA");
+            entity.HasKey(e => e.Id).HasName("PK__Employee__7AD04FF12592BDDA");
 
-            entity.Property(e => e.EmployeeId)
+            entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("EmployeeID");
             entity.Property(e => e.PickupPointId).HasColumnName("PickupPointID");
@@ -76,9 +76,9 @@ public partial class ApplicationContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BAF46C5998C");
+            entity.HasKey(e => e.Id).HasName("PK__Orders__C3905BAF46C5998C");
 
-            entity.Property(e => e.OrderId)
+            entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("OrderID");
             entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
@@ -99,9 +99,9 @@ public partial class ApplicationContext : DbContext
 
         modelBuilder.Entity<OrderDetail>(entity =>
         {
-            entity.HasKey(e => e.OrderDetailId).HasName("PK__OrderDet__D3B9D30CB24833E8");
+            entity.HasKey(e => e.Id).HasName("PK__OrderDet__D3B9D30CB24833E8");
 
-            entity.Property(e => e.OrderDetailId)
+            entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("OrderDetailID");
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
@@ -124,9 +124,9 @@ public partial class ApplicationContext : DbContext
 
         modelBuilder.Entity<PickupPoint>(entity =>
         {
-            entity.HasKey(e => e.PickupPointId).HasName("PK__PickupPo__195D7E8023C04053");
+            entity.HasKey(e => e.Id).HasName("PK__PickupPo__195D7E8023C04053");
 
-            entity.Property(e => e.PickupPointId)
+            entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("PickupPointID");
             entity.Property(e => e.Address).HasMaxLength(255);
@@ -138,9 +138,9 @@ public partial class ApplicationContext : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PK__Products__B40CC6ED0D76F35F");
+            entity.HasKey(e => e.Id).HasName("PK__Products__B40CC6ED0D76F35F");
 
-            entity.Property(e => e.ProductId)
+            entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("ProductID");
             entity.Property(e => e.Category).HasMaxLength(50);
@@ -156,9 +156,9 @@ public partial class ApplicationContext : DbContext
 
         modelBuilder.Entity<Seller>(entity =>
         {
-            entity.HasKey(e => e.SellerId).HasName("PK__Sellers__7FE3DBA19FFCE9AD");
+            entity.HasKey(e => e.Id).HasName("PK__Sellers__7FE3DBA19FFCE9AD");
 
-            entity.Property(e => e.SellerId)
+            entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("SellerID");
             entity.Property(e => e.Address).HasMaxLength(255);
@@ -173,9 +173,9 @@ public partial class ApplicationContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CCAC167A0EEC");
+            entity.HasKey(e => e.Id).HasName("PK__Users__1788CCAC167A0EEC");
 
-            entity.Property(e => e.UserId)
+            entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("UserID");
             entity.Property(e => e.Email).HasMaxLength(40);

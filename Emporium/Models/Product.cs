@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Emporium.Infrastructure.Based;
 using System.Collections.Generic;
 
 namespace Emporium.Models;
 
-public partial class Product
+public partial class Product : BaseEntity
 {
-    public int ProductId { get; set; }
-
     public int? SellerId { get; set; }
 
     public string Name { get; set; } = null!;

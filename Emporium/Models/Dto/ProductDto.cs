@@ -5,7 +5,7 @@ namespace Emporium.Models.Dto;
 public class ProductDto
 {
     [ColumnName("Артикул")]
-    public int ProductId { get; set; }
+    public int Id { get; set; }
 
     [ColumnName("Название")]
     public string Name { get; set; } = null!;

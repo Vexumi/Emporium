@@ -57,7 +57,7 @@ namespace Emporium.ViewModels
 
             var user = new User()
             {
-                UserId = 0,
+                Id = 0,
                 FullName = "Gaag Gleb Alexandrovich",
                 Phone = "88005553535",
                 Email = "admin",

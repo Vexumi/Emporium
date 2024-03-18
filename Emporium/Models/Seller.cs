@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Emporium.Infrastructure.Based;
 using System.Collections.Generic;
 
 namespace Emporium.Models;
 
-public partial class Seller
+public partial class Seller : BaseEntity
 {
-    public int SellerId { get; set; }
-
     public string? Address { get; set; }
 
     public long? Itin { get; set; }

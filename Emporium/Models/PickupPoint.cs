@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Emporium.Infrastructure.Based;
 using System.Collections.Generic;
 
 namespace Emporium.Models;
 
-public partial class PickupPoint
+public partial class PickupPoint : BaseEntity
 {
-    public int PickupPointId { get; set; }
-
     public string Name { get; set; } = null!;
 
     public string? Address { get; set; }

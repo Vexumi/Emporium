@@ -1,6 +1,7 @@
 ﻿using Emporium.Infrastructure;
 using Emporium.Infrastructure.Based;
 using Emporium.Infrastructure.Extensions;
+using Emporium.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -8,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace Emporium.Services
 {
-    public class CRUDService<EntityType> : BaseService
-        where EntityType : class
+    public class CRUDService<EntityType> : BaseService, ICRUDService
+        where EntityType : BaseEntity
     {
         public CRUDService(ApplicationContext context) : base(context) { }
 

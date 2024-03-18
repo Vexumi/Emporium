@@ -19,7 +19,7 @@ namespace Emporium.Services
 
         public override IQueryable<PickupPoint> FindById(int id)
         {
-            return this.dbContext.Set<PickupPoint>().Where(p => p.PickupPointId == id);
+            return this.dbContext.Set<PickupPoint>().Where(p => p.Id == id);
         }
     }
 }

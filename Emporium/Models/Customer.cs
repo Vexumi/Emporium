@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Emporium.Infrastructure.Based;
 using System.Collections.Generic;
 
 namespace Emporium.Models;
 
-public partial class Customer
+public partial class Customer : BaseEntity
 {
-    public int CustomerId { get; set; }
-
     public string? CardNumber { get; set; }
 
     public int UserId { get; set; }

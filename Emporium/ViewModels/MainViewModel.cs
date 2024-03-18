@@ -2,6 +2,7 @@
 using Emporium.Infrastructure;
 using Emporium.Infrastructure.Based;
 using Emporium.Infrastructure.Enums;
+using Emporium.Interfaces;
 using Emporium.Models;
 using Emporium.Models.Dto;
 using Emporium.Services;
@@ -28,10 +29,11 @@ namespace Emporium.ViewModels
         private readonly IMapper _mapper;
 
         private object _items;
+        private CRUDService<BaseEntity> _currentService;
 
         private User _user;
         private WindowType _openedWindow;
-        private Paginator _paginator;
+        private Paginator _paginator = new Paginator(0);
         private bool _isFilterDescriptionTextBoxEnabled = false;
 
         public ICommand OpenWindowCommand { get; set; }
@@ -133,7 +135,7 @@ namespace Emporium.ViewModels
             {
                 case WindowType.Products:
                     {
-                        var product = await this._productsService.FindById(GetItemFromTable<ProductDto>(sender).ProductId).FirstOrDefaultAsync();
+                        var product = await this._productsService.FindById(GetItemFromTable<ProductDto>(sender).Id).FirstOrDefaultAsync();
 
                         this._productDetailsViewModel.Item = product;
                         var dialogWindow = new ProductDetailsWindow(this._productDetailsViewModel);
@@ -142,7 +144,7 @@ namespace Emporium.ViewModels
                     }
                 case WindowType.Orders:
                     {
-                        var orders = await this._ordersService.FindById(GetItemFromTable<OrderDto>(sender).OrderId).FirstOrDefaultAsync();
+                        var orders = await this._ordersService.FindById(GetItemFromTable<OrderDto>(sender).Id).FirstOrDefaultAsync();
 
                         this._orderDetailsViewModel.Item = orders;
                         var dialogWindow = new OrderDetailsWindow(this._orderDetailsViewModel);
@@ -151,7 +153,7 @@ namespace Emporium.ViewModels
                     }
                 case WindowType.Employees:
                     {
-                        var employees = await this._employeesService.FindById(GetItemFromTable<EmployeeDto>(sender).EmployeeId).FirstOrDefaultAsync();
+                        var employees = await this._employeesService.FindById(GetItemFromTable<EmployeeDto>(sender).Id).FirstOrDefaultAsync();
 
                         this._employeeDetailsViewModel.Item = employees;
                         var dialogWindow = new EmployeeDetailsWindow(this._employeeDetailsViewModel);
@@ -160,7 +162,7 @@ namespace Emporium.ViewModels
                     }
                 case WindowType.PickupPoints:
                     {
-                        var pickupPoints = await this._pickpointsService.FindById(GetItemFromTable<PickPointDto>(sender).PickupPointId).FirstOrDefaultAsync();
+                        var pickupPoints = await this._pickpointsService.FindById(GetItemFromTable<PickPointDto>(sender).Id).FirstOrDefaultAsync();
 
                         this._pickupPointDetailsViewModel.Item = pickupPoints;
                         var dialogWindow = new PickupPointDetailsWindow(this._pickupPointDetailsViewModel);
@@ -181,29 +183,26 @@ namespace Emporium.ViewModels
 
         private async Task ReloadPage()
         {
+            var items = await this._currentService.GetAll(this._paginator).ToListAsync();
             switch (this._openedWindow)
             {
                 case WindowType.Products:
                     {
-                        var items = await this._productsService.GetAll(this._paginator).ToListAsync();
                         this.Items = this._mapper.Map<ProductDto[]>(items);
                         break;
                     }
                 case WindowType.Orders:
                     {
-                        var items = await this._ordersService.GetAll(this._paginator).ToListAsync();
                         this.Items = this._mapper.Map<OrderDto[]>(items);
                         break;
                     }
                 case WindowType.Employees:
                     {
-                        var items = await this._employeesService.GetAll(this._paginator).ToListAsync();
                         this.Items = this._mapper.Map<EmployeeDto[]>(items);
                         break;
                     }
                 case WindowType.PickupPoints:
                     {
-                        var items = await this._pickpointsService.GetAll(this._paginator).ToListAsync();
                         this.Items = this._mapper.Map<PickPointDto[]>(items);
                         break;
                     }
@@ -213,20 +212,39 @@ namespace Emporium.ViewModels
 
         private int GetTotalElementsForWindow()
         {
-            switch (this._openedWindow)
-            {
-                case WindowType.Products: return this._productsService.Count();
-                case WindowType.Orders: return this._ordersService.Count();
-                case WindowType.Employees: return this._employeesService.Count();
-                case WindowType.PickupPoints: return this._pickpointsService.Count();
-                default: return 0;
-            }
+            if (this._currentService != null) return this._currentService.Count();
+            return 0;
         }
 
         private async Task OpenWindow(WindowType windowType)
         {
             this._openedWindow = windowType;
             this._paginator = new Paginator(this.GetTotalElementsForWindow());
+
+            switch (this._openedWindow)
+            {
+                case WindowType.Products:
+                    {
+                        this._currentService = (CRUDService<BaseEntity>)this._productsService;
+                        break;
+                    }
+                case WindowType.Orders:
+                    {
+                        this._currentService = (ICRUDService<BaseEntity>)this._ordersService;
+                        break;
+                    }
+                case WindowType.Employees:
+                    {
+                        this._currentService = (ICRUDService<BaseEntity>)this._employeesService;
+                        break;
+                    }
+                case WindowType.PickupPoints:
+                    {
+                        this._currentService = (ICRUDService<BaseEntity>)this._pickpointsService;
+                        break;
+                    }
+            }
+
             await this.ReloadPage();
         }
 

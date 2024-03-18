@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Emporium.Infrastructure.Based;
+using System;
 using System.Collections.Generic;
 
 namespace Emporium.Models;
 
-public partial class Order
+public partial class Order : BaseEntity
 {
-    public int OrderId { get; set; }
-
     public int? CustomerId { get; set; }
 
     public int? EmployeeId { get; set; }

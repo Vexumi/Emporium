@@ -6,7 +6,7 @@ namespace Emporium.Models.Dto
     public class OrderDto
     {
         [ColumnName("Номер заказа")]
-        public int OrderId { get; set; }
+        public int Id { get; set; }
 
         [ColumnName("Покупатель")]
         public string Customer { get; set; } = null!;

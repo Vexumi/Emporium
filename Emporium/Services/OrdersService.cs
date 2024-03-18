@@ -23,7 +23,7 @@ namespace Emporium.Services
 
         public override IQueryable<Order?> FindById(int id)
         {
-            return this.dbContext.Set<Order>().Where(p => p.OrderId == id);
+            return this.dbContext.Set<Order>().Where(p => p.Id == id);
         }
     }
 }
