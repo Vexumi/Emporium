@@ -29,7 +29,7 @@ namespace Emporium.ViewModels
         private readonly IMapper _mapper;
 
         private object _items;
-        private CRUDService<BaseEntity> _currentService;
+        private ICountable _currentService;
 
         private User _user;
         private WindowType _openedWindow;
@@ -183,26 +183,29 @@ namespace Emporium.ViewModels
 
         private async Task ReloadPage()
         {
-            var items = await this._currentService.GetAll(this._paginator).ToListAsync();
             switch (this._openedWindow)
             {
                 case WindowType.Products:
                     {
+                        var items = await this._productsService.GetAll(this._paginator).ToListAsync();
                         this.Items = this._mapper.Map<ProductDto[]>(items);
                         break;
                     }
                 case WindowType.Orders:
                     {
+                        var items = await this._ordersService.GetAll(this._paginator).ToListAsync();
                         this.Items = this._mapper.Map<OrderDto[]>(items);
                         break;
                     }
                 case WindowType.Employees:
                     {
+                        var items = await this._employeesService.GetAll(this._paginator).ToListAsync();
                         this.Items = this._mapper.Map<EmployeeDto[]>(items);
                         break;
                     }
                 case WindowType.PickupPoints:
                     {
+                        var items = await this._pickpointsService.GetAll(this._paginator).ToListAsync();
                         this.Items = this._mapper.Map<PickPointDto[]>(items);
                         break;
                     }
@@ -225,22 +228,22 @@ namespace Emporium.ViewModels
             {
                 case WindowType.Products:
                     {
-                        this._currentService = (CRUDService<BaseEntity>)this._productsService;
+                        this._currentService = this._productsService;
                         break;
                     }
                 case WindowType.Orders:
                     {
-                        this._currentService = (ICRUDService<BaseEntity>)this._ordersService;
+                        this._currentService = this._ordersService;
                         break;
                     }
                 case WindowType.Employees:
                     {
-                        this._currentService = (ICRUDService<BaseEntity>)this._employeesService;
+                        this._currentService = this._employeesService;
                         break;
                     }
                 case WindowType.PickupPoints:
                     {
-                        this._currentService = (ICRUDService<BaseEntity>)this._pickpointsService;
+                        this._currentService = this._pickpointsService;
                         break;
                     }
             }

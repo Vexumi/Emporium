@@ -7,7 +7,7 @@ using System.Windows.Input;
 namespace Emporium.Infrastructure.Based
 {
     public class BaseDetailsViewModel<T, S> : BaseViewModel
-        where S : CRUDService<T> where T : class
+        where S : CRUDService<T> where T : BaseEntity
     {
         private Window _window;
         private T _item;

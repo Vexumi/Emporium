@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Emporium.Services
 {
-    public class CRUDService<EntityType> : BaseService, ICRUDService
+    public class CRUDService<EntityType> : BaseService, ICountable
         where EntityType : BaseEntity
     {
         public CRUDService(ApplicationContext context) : base(context) { }

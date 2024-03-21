@@ -31,7 +31,7 @@ public partial class ApplicationContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Gaag_Lab1;Trusted_Connection=True;");
+        => optionsBuilder.UseSqlite("Data Source=./emporium.db");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -41,7 +41,7 @@ public partial class ApplicationContext : DbContext
 
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
-                .HasColumnName("CustomerID");
+                .HasColumnName("ID");
             entity.Property(e => e.CardNumber).HasMaxLength(19);
             entity.Property(e => e.UserId).HasColumnName("UserID");
 
@@ -57,7 +57,7 @@ public partial class ApplicationContext : DbContext
 
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
-                .HasColumnName("EmployeeID");
+                .HasColumnName("ID");
             entity.Property(e => e.PickupPointId).HasColumnName("PickupPointID");
             entity.Property(e => e.Position).HasMaxLength(50);
             entity.Property(e => e.Salary).HasColumnType("decimal(10, 2)");
@@ -80,7 +80,7 @@ public partial class ApplicationContext : DbContext
 
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
-                .HasColumnName("OrderID");
+                .HasColumnName("ID");
             entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
             entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
             entity.Property(e => e.OrderDate).HasColumnType("date");
@@ -103,7 +103,7 @@ public partial class ApplicationContext : DbContext
 
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
-                .HasColumnName("OrderDetailID");
+                .HasColumnName("ID");
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
             entity.Property(e => e.PickupPointId).HasColumnName("PickupPointID");
             entity.Property(e => e.ProductId).HasColumnName("ProductID");
@@ -128,7 +128,7 @@ public partial class ApplicationContext : DbContext
 
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
-                .HasColumnName("PickupPointID");
+                .HasColumnName("ID");
             entity.Property(e => e.Address).HasMaxLength(255);
             entity.Property(e => e.Name).HasMaxLength(100);
             entity.Property(e => e.Phone).HasMaxLength(20);
@@ -142,7 +142,7 @@ public partial class ApplicationContext : DbContext
 
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
-                .HasColumnName("ProductID");
+                .HasColumnName("ID");
             entity.Property(e => e.Category).HasMaxLength(50);
             entity.Property(e => e.Description).HasColumnType("ntext");
             entity.Property(e => e.Name).HasMaxLength(255);
@@ -160,7 +160,7 @@ public partial class ApplicationContext : DbContext
 
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
-                .HasColumnName("SellerID");
+                .HasColumnName("ID");
             entity.Property(e => e.Address).HasMaxLength(255);
             entity.Property(e => e.Itin).HasColumnName("ITIN");
             entity.Property(e => e.UserId).HasColumnName("UserID");
@@ -177,7 +177,7 @@ public partial class ApplicationContext : DbContext
 
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
-                .HasColumnName("UserID");
+                .HasColumnName("ID");
             entity.Property(e => e.Email).HasMaxLength(40);
             entity.Property(e => e.FullName).HasMaxLength(100);
             entity.Property(e => e.Password).HasMaxLength(40);
