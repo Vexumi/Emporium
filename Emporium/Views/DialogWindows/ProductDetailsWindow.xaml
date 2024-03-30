@@ -13,7 +13,7 @@
         <StackPanel Grid.Column="0" HorizontalAlignment="Left" Background="#FFB9B9B9" DataContext="{Binding Item}">
             <DockPanel>
                 <Label Content="Артикул" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Width="100"/>
-                <TextBox Text="{Binding ProductId}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextWrapping="Wrap" IsReadOnly="True" FontSize="14" />
+                <TextBox Text="{Binding Id}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextWrapping="Wrap" IsReadOnly="True" FontSize="14" />
             </DockPanel>
             <DockPanel>
                 <Label Content="Название" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Width="100"/>
