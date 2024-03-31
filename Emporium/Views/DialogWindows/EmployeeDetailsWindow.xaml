@@ -7,6 +7,31 @@
         mc:Ignorable="d"
         Title="EmployeeDetailsWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" HorizontalAlignment="Left" Background="#FFB9B9B9" DataContext="{Binding Item}" Width="390">
+            <DockPanel>
+                <Label Content="Номер" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Width="100"/>
+                <TextBox Text="{Binding Id}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextWrapping="Wrap" IsReadOnly="True" FontSize="14" />
+            </DockPanel>
+            <DockPanel>
+                <Label Content="ФИО" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Width="100"/>
+                <TextBox Text="{Binding User.FullName}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextWrapping="Wrap" FontSize="14"/>
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Должность" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Width="100"/>
+                <TextBox Text="{Binding Position}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextWrapping="Wrap" FontSize="14"/>
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Зарплата" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Width="100"/>
+                <TextBox Text="{Binding Salary}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextWrapping="Wrap" FontSize="14"/>
+            </DockPanel>
+        </StackPanel>
+        <StackPanel Grid.Column="1">
+            <Button Content="Сохранить" Height="40" Margin="10,5,10,5" Command="{Binding SaveCommand}"/>
+            <Button Content="Удалить" Height="40" Margin="10,5,10,5" Command="{Binding DeleteCommand}"/>
+        </StackPanel>
     </Grid>
 </Window>

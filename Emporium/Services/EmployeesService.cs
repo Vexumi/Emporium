@@ -20,7 +20,7 @@ namespace Emporium.Services
 
         public override IQueryable<Employee?> FindById(int id)
         {
-            return this.dbContext.Set<Employee>().Where(p => p.Id == id);
+            return this.dbContext.Set<Employee>().Include(x => x.User).Where(p => p.Id == id);
         }
     }
 }

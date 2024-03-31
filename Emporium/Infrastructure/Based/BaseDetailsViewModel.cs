@@ -38,8 +38,8 @@ namespace Emporium.Infrastructure.Based
         public BaseDetailsViewModel(S service)
         {
             this.service = service;
-            this.SaveCommand = new RelayCommand(async o => Save());
-            this.DeleteCommand = new RelayCommand(o => Delete());
+            this.SaveCommand = new RelayCommand(async o => await Save());
+            this.DeleteCommand = new RelayCommand(async o => await Delete());
         }
 
         public async Task Save()
