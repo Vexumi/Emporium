@@ -44,7 +44,14 @@ namespace Emporium.Infrastructure.Based
 
         public async Task Save()
         {
-            await this.service.Save(Item);
+            if (Item.Id == null)
+            {
+                await this.service.Create(Item);
+            }
+            else
+            {
+                await this.service.Save(Item);
+            }
             this._window.DialogResult = true;
         }
 

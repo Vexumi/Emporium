@@ -26,6 +26,12 @@ namespace Emporium.Services
             await this.dbContext.SaveChangesAsync();
         }
 
+        public virtual async Task Create(EntityType entity)
+        {
+            this.dbContext.Add(entity);
+            await this.dbContext.SaveChangesAsync();
+        }
+
         public virtual IQueryable<EntityType> GetAll()
         {
             return this.dbContext.Set<EntityType>().AsNoTracking();

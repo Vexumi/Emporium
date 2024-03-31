@@ -39,6 +39,7 @@ namespace Emporium.ViewModels
         public ICommand OpenWindowCommand { get; set; }
         public ICommand ChangePageCommand { get; set; }
         public ICommand ApplyFiltersCommand { get; set; }
+        public ICommand CreateNewEntityCommand { get; set; }
 
         public User CurrentUser
         {
@@ -117,6 +118,7 @@ namespace Emporium.ViewModels
             this.OpenWindowCommand = new RelayCommand(async o => await OpenWindow(Enum.Parse<WindowType>(o.ToString())));
             this.ChangePageCommand = new RelayCommand(async o => await ChangePage(o.ToString()));
             this.ApplyFiltersCommand = new RelayCommand(async o => await ReloadPage());
+            this.CreateNewEntityCommand = new RelayCommand(async o => await OnCreateNewEntityClick());
         }
 
         public object Items
@@ -127,6 +129,43 @@ namespace Emporium.ViewModels
                 _items = value;
                 OnPropertyChanged(nameof(Items));
             }
+        }
+
+        public async Task OnCreateNewEntityClick()
+        {
+            switch (this._openedWindow)
+            {
+                case WindowType.Products:
+                    {
+                        this._productDetailsViewModel.Item = new Product();
+                        var dialogWindow = new ProductDetailsWindow(this._productDetailsViewModel);
+                        dialogWindow.ShowDialog();
+                        break;
+                    }
+                case WindowType.Orders:
+                    {
+                        this._orderDetailsViewModel.Item = new Order();
+                        var dialogWindow = new OrderDetailsWindow(this._orderDetailsViewModel);
+                        dialogWindow.ShowDialog();
+                        break;
+                    }
+                case WindowType.Employees:
+                    {
+                        this._employeeDetailsViewModel.Item = new Employee();
+                        var dialogWindow = new EmployeeDetailsWindow(this._employeeDetailsViewModel);
+                        dialogWindow.ShowDialog();
+                        break;
+                    }
+                case WindowType.PickupPoints:
+                    {
+                        this._pickupPointDetailsViewModel.Item = new PickupPoint();
+                        var dialogWindow = new PickupPointDetailsWindow(this._pickupPointDetailsViewModel);
+                        dialogWindow.ShowDialog();
+                        break;
+                    }
+                default: break;
+            }
+            await this.ReloadPage();
         }
 
         public async void OnRowDoubleClick(object sender, MouseButtonEventArgs e)
@@ -222,7 +261,6 @@ namespace Emporium.ViewModels
         private async Task OpenWindow(WindowType windowType)
         {
             this._openedWindow = windowType;
-            this._paginator = new Paginator(this.GetTotalElementsForWindow());
 
             switch (this._openedWindow)
             {
@@ -247,6 +285,7 @@ namespace Emporium.ViewModels
                         break;
                     }
             }
+            this._paginator = new Paginator(this.GetTotalElementsForWindow());
 
             await this.ReloadPage();
         }

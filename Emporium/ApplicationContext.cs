@@ -7,11 +7,13 @@ public partial class ApplicationContext : DbContext
 {
     public ApplicationContext()
     {
+        Database.EnsureCreated();
     }
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
     {
+        Database.EnsureCreated();
     }
 
     public virtual DbSet<Customer> Customers { get; set; }
@@ -33,7 +35,7 @@ public partial class ApplicationContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlite("Data Source=./emporium.db");
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    /*protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Customer>(entity =>
         {
@@ -141,7 +143,6 @@ public partial class ApplicationContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__Products__B40CC6ED0D76F35F");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
                 .HasColumnName("ID");
             entity.Property(e => e.Category).HasMaxLength(50);
             entity.Property(e => e.Description).HasColumnType("ntext");
@@ -186,6 +187,6 @@ public partial class ApplicationContext : DbContext
 
         OnModelCreatingPartial(modelBuilder);
     }
-
+*/
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
