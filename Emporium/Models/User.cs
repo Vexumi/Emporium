@@ -11,9 +11,9 @@ public partial class User : BaseEntity
 
     public string Email { get; set; } = null!;
 
-    public string Password { get; set; } = null!;
+    public string Password { get; set; } = "qwerty123";
 
-    public byte AccountType { get; set; }
+    public byte AccountType { get; set; } = (byte)1;
 
     public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
 

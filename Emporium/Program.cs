@@ -36,6 +36,7 @@ public class Program
                 services.AddTransient<EmployeesService>();
                 services.AddTransient<PickupPointsService>();
                 services.AddTransient<SellersService>();
+                services.AddTransient<UsersService>();
                 services.AddTransient<SignInService>();
                 services.AddSingleton(mapper);
 
@@ -47,6 +48,7 @@ public class Program
                 services.AddSingleton<PickupPointDetailsViewModel>();
                 services.AddSingleton<EmployeeDetailsViewModel>();
                 services.AddSingleton<ProductAddViewModel>();
+                services.AddSingleton<EmployeeAddViewModel>();
             })
             .Build();
 

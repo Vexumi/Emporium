@@ -9,9 +9,10 @@ namespace Emporium.Infrastructure.Based
     public class BaseDetailsViewModel<T, S> : BaseViewModel
         where S : CRUDService<T> where T : BaseEntity
     {
-        private Window _window;
         private T _item;
         protected S service;
+        protected Window _window;
+
         public ICommand SaveCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
 
@@ -42,7 +43,7 @@ namespace Emporium.Infrastructure.Based
             this.DeleteCommand = new RelayCommand(async o => await Delete());
         }
 
-        public async Task Save()
+        public virtual async Task Save()
         {
             if (Item.Id == null)
             {
@@ -55,7 +56,7 @@ namespace Emporium.Infrastructure.Based
             this._window.DialogResult = true;
         }
 
-        public async Task Delete()
+        public virtual async Task Delete()
         {
             await this.service.Delete(Item);
             this._window.DialogResult = true;

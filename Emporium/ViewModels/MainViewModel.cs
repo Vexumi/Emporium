@@ -27,6 +27,7 @@ namespace Emporium.ViewModels
         private readonly EmployeeDetailsViewModel _employeeDetailsViewModel;
         private readonly PickupPointDetailsViewModel _pickupPointDetailsViewModel;
         private readonly ProductAddViewModel _productAddViewModel;
+        private readonly EmployeeAddViewModel _employeeAddViewModel;
         private readonly IMapper _mapper;
 
         private object _items;
@@ -103,6 +104,7 @@ namespace Emporium.ViewModels
             EmployeeDetailsViewModel employeeDetailsViewModel,
             PickupPointDetailsViewModel pickupPointDetailsViewModel,
             ProductAddViewModel productAddViewModel,
+            EmployeeAddViewModel employeeAddViewModel,
             IMapper mapper)
         {
             this._productsService = productsService;
@@ -115,6 +117,7 @@ namespace Emporium.ViewModels
             this._employeeDetailsViewModel = employeeDetailsViewModel;
             this._pickupPointDetailsViewModel = pickupPointDetailsViewModel;
             this._productAddViewModel = productAddViewModel;
+            this._employeeAddViewModel = employeeAddViewModel;
 
             this._mapper = mapper;
 
@@ -145,17 +148,10 @@ namespace Emporium.ViewModels
                         dialogWindow.ShowDialog();
                         break;
                     }
-                case WindowType.Orders:
-                    {
-                        this._orderDetailsViewModel.Item = new Order();
-                        var dialogWindow = new OrderDetailsWindow(this._orderDetailsViewModel);
-                        dialogWindow.ShowDialog();
-                        break;
-                    }
                 case WindowType.Employees:
                     {
-                        this._employeeDetailsViewModel.Item = new Employee();
-                        var dialogWindow = new EmployeeDetailsWindow(this._employeeDetailsViewModel);
+                        this._employeeAddViewModel.Item = new Employee() { User = new User() };
+                        var dialogWindow = new EmployeeAddWindow(this._employeeAddViewModel);
                         dialogWindow.ShowDialog();
                         break;
                     }
