@@ -6,6 +6,7 @@ namespace Emporium.Services
 {
     public class EmployeesService : CRUDService<Employee>
     {
+        public EmployeesService():base(new ApplicationContext()) { }
         public EmployeesService(ApplicationContext context) : base(context)
         {
 

@@ -8,6 +8,7 @@ using Emporium.ViewModels;
 using AutoMapper;
 using Emporium.Infrastructure.MappingProfiles;
 using Emporium.ViewModels.DialogWindows;
+using Emporium.Views.DialogWindows;
 
 public class Program
 {
@@ -34,6 +35,7 @@ public class Program
                 services.AddTransient<OrdersService>();
                 services.AddTransient<EmployeesService>();
                 services.AddTransient<PickupPointsService>();
+                services.AddTransient<SellersService>();
                 services.AddTransient<SignInService>();
                 services.AddSingleton(mapper);
 
@@ -44,6 +46,7 @@ public class Program
                 services.AddSingleton<OrderDetailsViewModel>();
                 services.AddSingleton<PickupPointDetailsViewModel>();
                 services.AddSingleton<EmployeeDetailsViewModel>();
+                services.AddSingleton<ProductAddViewModel>();
             })
             .Build();
 

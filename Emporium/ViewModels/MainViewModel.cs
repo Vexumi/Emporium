@@ -26,6 +26,7 @@ namespace Emporium.ViewModels
         private readonly OrderDetailsViewModel _orderDetailsViewModel;
         private readonly EmployeeDetailsViewModel _employeeDetailsViewModel;
         private readonly PickupPointDetailsViewModel _pickupPointDetailsViewModel;
+        private readonly ProductAddViewModel _productAddViewModel;
         private readonly IMapper _mapper;
 
         private object _items;
@@ -101,6 +102,7 @@ namespace Emporium.ViewModels
             OrderDetailsViewModel orderDetailsViewModel,
             EmployeeDetailsViewModel employeeDetailsViewModel,
             PickupPointDetailsViewModel pickupPointDetailsViewModel,
+            ProductAddViewModel productAddViewModel,
             IMapper mapper)
         {
             this._productsService = productsService;
@@ -112,6 +114,7 @@ namespace Emporium.ViewModels
             this._orderDetailsViewModel = orderDetailsViewModel;
             this._employeeDetailsViewModel = employeeDetailsViewModel;
             this._pickupPointDetailsViewModel = pickupPointDetailsViewModel;
+            this._productAddViewModel = productAddViewModel;
 
             this._mapper = mapper;
 
@@ -137,8 +140,8 @@ namespace Emporium.ViewModels
             {
                 case WindowType.Products:
                     {
-                        this._productDetailsViewModel.Item = new Product();
-                        var dialogWindow = new ProductDetailsWindow(this._productDetailsViewModel);
+                        this._productAddViewModel.Item = new Product();
+                        var dialogWindow = new ProductAddWindow(this._productAddViewModel);
                         dialogWindow.ShowDialog();
                         break;
                     }

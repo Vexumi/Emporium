@@ -9,11 +9,11 @@ public partial class Product : BaseEntity
 
     public string Name { get; set; } = null!;
 
-    public decimal Price { get; set; }
+    public decimal Price { get; set; } = 0;
 
     public string? Category { get; set; }
 
-    public int? Rating { get; set; }
+    public int Rating { get; set; } = 0;
 
     public string? Description { get; set; }
 
