@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Emporium.Views.DialogWindows"
         mc:Ignorable="d"
-        Title="OrderDetailsWindow" Height="508" Width="837" ResizeMode="NoResize">
+        Title="OrderDetailsWindow" Height="508" Width="948" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250" />
@@ -26,7 +26,12 @@
                 <TextBox Text="{Binding TotalAmount}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextWrapping="Wrap" IsReadOnly="True" FontSize="14" />
             </DockPanel>
         </StackPanel>
-        <DataGrid Grid.Column="1" x:Name="OrderDetailsTable" d:ItemsSource="{Binding OrderDetails}" AutoGenerateColumns="True" AutoGeneratingColumn="OrderDetailsTable_AutoGeneratingColumn"/>
+        <DataGrid Grid.Column="1" 
+                  x:Name="OrderDetailsTable" 
+                  ItemsSource="{Binding OrderDetails}" 
+                  AutoGenerateColumns="True"
+                  AutoGeneratingColumn="OrderDetailsTable_AutoGeneratingColumn"
+                  IsReadOnly="True"/>
         <StackPanel Grid.Column="2">
             <Button Content="Сохранить" Height="40" Margin="10,5,10,5" Command="{Binding SaveCommand}"/>
             <Button Content="Удалить" Height="40" Margin="10,5,10,5" Command="{Binding DeleteCommand}"/>

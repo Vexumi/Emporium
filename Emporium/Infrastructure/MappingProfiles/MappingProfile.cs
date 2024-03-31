@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using Emporium.Models;
 using Emporium.Models.Dto;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Linq;
 
 namespace Emporium.Infrastructure.MappingProfiles
 {
@@ -22,6 +19,12 @@ namespace Emporium.Infrastructure.MappingProfiles
                 .ForMember(dest => dest.PickupPoint, opt => opt.MapFrom(src => src.PickupPoint.Address));
             CreateMap<PickupPoint, PickPointDto>()
                 .ForMember(dest => dest.EmployeesCount, opt => opt.MapFrom(src => src.Employees.Count));
+            CreateMap<OrderDetail, OrderDetailDto>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Product.Name))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Product.Price))
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Product.Category))
+                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.PickupPoint.Address))
+                .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.PickupPoint.Phone));
         }
     }
 }
