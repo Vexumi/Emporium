@@ -49,6 +49,7 @@ public class Program
                 services.AddSingleton<EmployeeDetailsViewModel>();
                 services.AddSingleton<ProductAddViewModel>();
                 services.AddSingleton<EmployeeAddViewModel>();
+                services.AddSingleton<PickupPointAddViewModel>();
             })
             .Build();
 

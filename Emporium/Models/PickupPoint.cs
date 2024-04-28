@@ -13,7 +13,7 @@ public partial class PickupPoint : BaseEntity
 
     public string? WorkingHours { get; set; }
 
-    public decimal? Rating { get; set; }
+    public decimal? Rating { get; set; } = 0;
 
     public virtual ICollection<Employee> Employees { get; set; } = new List<Employee>();
 

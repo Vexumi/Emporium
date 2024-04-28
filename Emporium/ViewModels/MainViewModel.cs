@@ -28,6 +28,7 @@ namespace Emporium.ViewModels
         private readonly PickupPointDetailsViewModel _pickupPointDetailsViewModel;
         private readonly ProductAddViewModel _productAddViewModel;
         private readonly EmployeeAddViewModel _employeeAddViewModel;
+        private readonly PickupPointAddViewModel _pickupPointAddViewModel;
         private readonly IMapper _mapper;
 
         private object _items;
@@ -105,6 +106,7 @@ namespace Emporium.ViewModels
             PickupPointDetailsViewModel pickupPointDetailsViewModel,
             ProductAddViewModel productAddViewModel,
             EmployeeAddViewModel employeeAddViewModel,
+            PickupPointAddViewModel pickupPointAddViewModel,
             IMapper mapper)
         {
             this._productsService = productsService;
@@ -118,6 +120,7 @@ namespace Emporium.ViewModels
             this._pickupPointDetailsViewModel = pickupPointDetailsViewModel;
             this._productAddViewModel = productAddViewModel;
             this._employeeAddViewModel = employeeAddViewModel;
+            this._pickupPointAddViewModel = pickupPointAddViewModel;
 
             this._mapper = mapper;
 
@@ -157,8 +160,8 @@ namespace Emporium.ViewModels
                     }
                 case WindowType.PickupPoints:
                     {
-                        this._pickupPointDetailsViewModel.Item = new PickupPoint();
-                        var dialogWindow = new PickupPointDetailsWindow(this._pickupPointDetailsViewModel);
+                        this._pickupPointAddViewModel.Item = new PickupPoint();
+                        var dialogWindow = new PickPointAddWindow(this._pickupPointAddViewModel);
                         dialogWindow.ShowDialog();
                         break;
                     }
