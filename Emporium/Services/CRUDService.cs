@@ -46,7 +46,7 @@ namespace Emporium.Services
 
         public virtual IQueryable<EntityType> FindById(int id)
         {
-            throw new NotImplementedException();
+            return this.GetAll().Where(x => x.Id == id);
         }
 
         public virtual int Count()

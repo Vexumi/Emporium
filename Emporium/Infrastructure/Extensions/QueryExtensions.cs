@@ -1,4 +1,5 @@
-﻿using Emporium.Infrastructure.Enums;
+﻿using Emporium.Infrastructure.Based;
+using Emporium.Infrastructure.Enums;
 using Emporium.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Identity.Client;
@@ -43,11 +44,12 @@ namespace Emporium.Infrastructure.Extensions
         }
 
         public static IQueryable<T> ApplyFilters<T>(this IQueryable<T> source, SortBy sortBy, FilterBy filterBy, string filterDesc)
+            where T: BaseEntity
         {
             return source;
         }
 
-        public static IQueryable<EntityType> ApplyOffset<EntityType>(this IQueryable<EntityType> source, int offset = 0, int takeCount = 20)
+        public static IQueryable<T> ApplyOffset<T>(this IQueryable<T> source, int offset = 0, int takeCount = 20)
         {
             return source.Skip(offset).Take(takeCount);
         }

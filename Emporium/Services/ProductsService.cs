@@ -1,4 +1,6 @@
-﻿using Emporium.Interfaces;
+﻿using Emporium.Infrastructure.Extensions;
+using Emporium.Infrastructure;
+using Emporium.Interfaces;
 using Emporium.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -21,6 +23,13 @@ namespace Emporium.Services
                 .AsNoTracking()
                 .Include(p => p.Seller)
                     .ThenInclude(s => s.User);
+        }
+
+        public override IQueryable<Product> GetAll(Paginator paginator)
+        {
+            return this.GetAll()
+                .ApplyFilters(paginator.SortSettings, paginator.FilterSettings, paginator.FilterOption)
+                .ApplyOffset(paginator.Offset, paginator.TakeCount);
         }
 
         public override IQueryable<Product?> FindById(int id)
