@@ -35,8 +35,10 @@ public partial class ApplicationContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlite("Data Source=./emporium.db");
 
-    /*protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Product>().Property(x => x.Price).HasConversion<double>();
+/*
         modelBuilder.Entity<Customer>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Customer__A4AE64B8AEFB4939");
@@ -186,7 +188,8 @@ public partial class ApplicationContext : DbContext
         });
 
         OnModelCreatingPartial(modelBuilder);
-    }
 */
+    }
+
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

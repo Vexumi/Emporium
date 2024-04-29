@@ -54,6 +54,42 @@ namespace Emporium.ViewModels
             }
         }
 
+        public string GetVisiblityBasedOnUser
+        {
+            get
+            {
+                return this.IsUserAdmin ? "Visible" : "Hidden";
+            }
+        }
+
+        public string GetVisiblityForProducts
+        {
+            get => (AccountTypeEnum)CurrentUser.AccountType == AccountTypeEnum.Admin
+                || (AccountTypeEnum)CurrentUser.AccountType == AccountTypeEnum.Customer
+                || (AccountTypeEnum)CurrentUser.AccountType == AccountTypeEnum.Employee ? "Visible" : "Hidden";
+        }
+
+        public string GetVisiblityForOrders
+        {
+            get => "Visible";
+        }
+
+        public string GetVisiblityForPickupPoints
+        {
+            get => (AccountTypeEnum)CurrentUser.AccountType == AccountTypeEnum.Admin
+                || (AccountTypeEnum)CurrentUser.AccountType == AccountTypeEnum.Employee ? "Visible" : "Hidden";
+        }
+
+        public string GetVisiblityEmployees
+        {
+            get => (AccountTypeEnum)CurrentUser.AccountType == AccountTypeEnum.Admin ? "Visible" : "Hidden";
+        }
+
+        public bool IsUserAdmin
+        {
+            get => (AccountTypeEnum)CurrentUser.AccountType == AccountTypeEnum.Admin;
+        }
+
         public bool IsFilterDescriptionTextBoxEnabled
         {
             get { return this._isFilterDescriptionTextBoxEnabled; }

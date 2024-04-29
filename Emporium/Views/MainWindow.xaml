@@ -38,10 +38,10 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Grid.RowSpan="4" x:Name="StackPanelMenuButtons" HorizontalAlignment="Left" Width="188" Background="#FFD8E9F9">
-            <Button x:Name="ButtonProducts" Content="Товары" Height="45" Margin="10,5,10,10" Command="{Binding OpenWindowCommand}" CommandParameter="Products"/>
-            <Button x:Name="ButtonOrders" Content="Заказы" Height="45" Margin="10,0,10,10" Command="{Binding OpenWindowCommand}" CommandParameter="Orders"/>
-            <Button x:Name="ButtonPickPoints" Content="ПВЗ" Height="45" Margin="10,0,10,10" Command="{Binding OpenWindowCommand}" CommandParameter="PickupPoints"/>
-            <Button x:Name="ButtonEmployees" Content="Сотрудники" Height="45" Margin="10,0,10,10" Command="{Binding OpenWindowCommand}" CommandParameter="Employees"/>
+            <Button Visibility="{Binding GetVisiblityForProducts}" x:Name="ButtonProducts" Content="Товары" Height="45" Margin="10,5,10,10" Command="{Binding OpenWindowCommand}" CommandParameter="Products"/>
+            <Button Visibility="{Binding GetVisiblityForOrders}" x:Name="ButtonOrders" Content="Заказы" Height="45" Margin="10,0,10,10" Command="{Binding OpenWindowCommand}" CommandParameter="Orders"/>
+            <Button Visibility="{Binding GetVisiblityForPickupPoints}" x:Name="ButtonPickPoints" Content="ПВЗ" Height="45" Margin="10,0,10,10" Command="{Binding OpenWindowCommand}" CommandParameter="PickupPoints"/>
+            <Button Visibility="{Binding GetVisiblityEmployees}" x:Name="ButtonEmployees" Content="Сотрудники" Height="45" Margin="10,0,10,10" Command="{Binding OpenWindowCommand}" CommandParameter="Employees"/>
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
