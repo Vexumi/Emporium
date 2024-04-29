@@ -7,6 +7,35 @@
         mc:Ignorable="d"
         Title="PickPointDetailsWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel HorizontalAlignment="Center" Background="#FFB9B9B9" DataContext="{Binding Item}" Width="400">
+            <DockPanel>
+                <Label Content="Название" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Width="100"/>
+                <TextBox Text="{Binding Name}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextWrapping="Wrap" FontSize="14"/>
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Адрес" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Width="100"/>
+                <TextBox Text="{Binding Address}"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextWrapping="Wrap" FontSize="14"/>
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Телефон" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Width="100"/>
+                <TextBox Text="{Binding Phone}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextWrapping="Wrap" FontSize="14"/>
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Часы работы" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Width="100"/>
+                <TextBox Text="{Binding WorkingHours}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextWrapping="Wrap" FontSize="14"/>
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Рейтинг" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Width="100"/>
+                <TextBox Text="{Binding Rating}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextWrapping="Wrap" IsReadOnly="True" FontSize="14" />
+            </DockPanel>
+        </StackPanel>
+        <StackPanel Grid.Column="1">
+            <Button Content="Сохранить" Height="40" Margin="10,5,10,5" Command="{Binding SaveCommand}"/>
+            <Button Content="Удалить" Height="40" Margin="10,5,10,5" Command="{Binding DeleteCommand}"/>
+        </StackPanel>
     </Grid>
 </Window>
